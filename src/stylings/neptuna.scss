@@ -1,0 +1,100 @@
+@import "_media-queries.scss";
+@import "_variables.scss";
+@import "_themes.scss";
+@import "_mixins.scss";
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.nav-item {
+  display: inline-block;
+  font-size: $navbar-item-size;
+  font-weight: 500;
+  margin-left: 1.2rem;
+  border-bottom: 3px solid transparent;
+
+  &:hover {
+    @include themify($themes) {
+      border-color: themed("border-color");
+    }
+  }
+
+  a {
+    @include themify($themes) {
+      color: themed("navbar-item-color") !important;
+    }
+  }
+}
+
+.has-sub {
+  .nav-item {
+    font-size: $navbar-item-size * 0.6 !important;
+    align-self: flex-start;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      border-bottom-width: 1px;
+      @include themify($themes) {
+        border-color: themed("border-color");
+      }
+    }
+  }
+  ul {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    justify-content: flex-start;
+    min-width: 160px;
+    height: fit-content;
+    padding: 0.5rem 0;
+    z-index: 1;
+
+    @include themify($themes) {
+      border: 1px dotted themed("border-color");
+    }
+
+    .nav-item {
+      border: none;
+      margin-left: 0.5rem !important;
+    }
+  }
+}
+
+// bootstrap custom overrides
+
+p,
+span,
+h1,
+h2,
+h3,
+legend,
+label,
+.text-muted,
+input[type="text"],
+input[type="password"] {
+  @include themify($themes) {
+    color: themed("text-color");
+  }
+}
+
+input[type="text"],
+input[type="password"],
+.input-group-text {
+  @include themify($themes) {
+    background-color: themed("navbar-background-color") !important;
+  }
+}
+
+nav > ol.breadcrumb {
+  @include themify($themes) {
+    background-color: themed("navbar-background-color") !important;
+  }
+}

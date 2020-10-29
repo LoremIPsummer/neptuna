@@ -1,0 +1,17 @@
+@import "~bootstrap-scss/bootstrap.scss";
+@import "~react-toastify/dist/ReactToastify.css";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap");
+@import "stylings/neptuna.scss";
+
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+html::-webkit-scrollbar {
+  width: 3px;
+  background-color: #f5f5f5;
+}
+html::-webkit-scrollbar-thumb {
+  background-color: #000000;
+}

@@ -1,0 +1,6 @@
+.ThemeSwitcher {
+  text-align: center !important;
+  @include themify($themes) {
+    color: themed("navbar-item-color");
+  }
+}

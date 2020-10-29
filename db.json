@@ -1,0 +1,135 @@
+{
+  "jwtTest": [
+    {
+      "id": 1,
+      "jwt": "TESZT TOKEN"
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 2
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 3
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 4
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 5
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 6
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 7
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 8
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 9
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 10
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 11
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 12
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 13
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 14
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 15
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 16
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 17
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 18
+    },
+    {
+      "neptunaCode": "123551231SDADS",
+      "recaptcha": "ASDADASDASDASDASD",
+      "password": "Asdman007",
+      "id": 19
+    }
+  ],
+  "getCurrentUser": [
+    {
+      "id": 1,
+      "current": {
+        "neptunaCode": "123456",
+        "firstName": "GAIN",
+        "lastName": "GAIN",
+        "motherName": "GAINmother",
+        "bornLocation": "GAIN",
+        "memberSince": "GAIN",
+        "bornDate": "GAIN",
+        "role": "GAIN",
+        "subjects": []
+      }
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

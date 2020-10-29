@@ -1,0 +1,243 @@
+// Desktop és főnézet
+
+@font-face {
+  font-family: MenuFont;
+  src: url("Aquire.otf") format("opentype");
+}
+
+.neptuna-nav {
+  @include vertical-center-items(row);
+
+  @include themify($themes) {
+    background-color: themed("navbar-background-color");
+  }
+
+  .neptuna-logo-title {
+    @include themify($themes) {
+      color: themed("logo-color");
+      border: 3px solid themed("border-color");
+    }
+    flex-shrink: 1;
+    padding: 5px;
+    a {
+      font-family: "MenuFont";
+      font-size: 3rem;
+    }
+  }
+
+  .has-sub {
+    position: relative;
+    display: inline-block;
+
+    &:hover ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start !important;
+    }
+
+    ul {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      height: fit-content;
+      padding: 0.5rem 0;
+      z-index: 1;
+      @include themify($themes) {
+        background-color: themed("sub-menu-background-color");
+        border: 1px dotted themed("border-color");
+      }
+
+      li {
+        font-size: $navbar-item-size * 0.8;
+        align-self: flex-start;
+        margin-bottom: 0.3rem;
+        border-bottom: 1px solid transparent;
+
+        &:hover {
+          border-bottom-width: 1px;
+
+          @include themify($themes) {
+            border-color: themed("border-color");
+          }
+        }
+      }
+    }
+  }
+
+  ul {
+    @include vertical-center-items(row);
+    list-style-type: none;
+    margin-bottom: 0;
+    height: 100%;
+
+    li {
+      display: inline-block;
+      font-size: $navbar-item-size;
+      font-weight: 500;
+      margin-left: 1.2rem;
+      border-bottom: 3px solid transparent;
+
+      &:hover {
+        @include themify($themes) {
+          border-color: themed("border-color");
+        }
+      }
+    }
+  }
+
+  .hamburger {
+    display: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  a {
+    text-decoration: none;
+    @include themify($themes) {
+      color: themed("navbar-item-color");
+    }
+  }
+
+  // Mobil & tablet nézet
+
+  @include respond-below(md) {
+    li.nav-item.has-sub {
+      border: none;
+      ul {
+        position: relative;
+        -webkit-animation: slide-in-left 0.2s
+          cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        animation: slide-in-left 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+      }
+    }
+    .opened {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      @include themify($themes) {
+        background-color: themed("mobile-menu-background-color");
+      }
+      -webkit-animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        both;
+      animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+
+    .closed {
+      position: fixed;
+      -webkit-animation: slide-out-left 0.5s
+        cubic-bezier(0.25, 0.46, 0.45, 0.94) both reverse;
+      animation: slide-out-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both
+        reverse;
+      transition: 0.5s ease-out;
+      bottom: 0;
+      left: 0;
+    }
+
+    .hamburger {
+      margin-left: auto;
+      display: inline-block;
+      @include themify($themes) {
+        border: 3px solid themed("border-color");
+      }
+    }
+    ul {
+      @include all-center-items(column);
+
+      height: 100%;
+      overflow-y: scroll;
+      position: fixed;
+      left: -100%;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: $navbar-background;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      li {
+        margin-top: 4rem;
+      }
+      li:last-of-type {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+@-webkit-keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

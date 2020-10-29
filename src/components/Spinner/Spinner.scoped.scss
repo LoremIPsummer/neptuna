@@ -1,0 +1,15 @@
+.spinner {
+  z-index: 2;
+  position: fixed;
+  height: 5rem;
+  width: 5rem;
+  top: 50%;
+  left: 50%;
+  margin-left: -2.5rem;
+  margin-top: -2.5rem;
+}
+
+.inverted {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}

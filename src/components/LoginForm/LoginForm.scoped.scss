@@ -1,0 +1,9 @@
+input {
+  border: 1px solid black;
+  background-color: $page-divider-color !important;
+}
+
+nav ol {
+  background-color: $navbar-background !important;
+  border: 1px solid black;
+}

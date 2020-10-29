@@ -1,0 +1,13 @@
+.neptuna-cookie-consept {
+  position: fixed;
+  min-height: fit-content;
+
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  @include themify($themes) {
+    background-color: themed("cookie-background-color");
+    color: themed("navbar-item-color");
+    border: 1px solid themed("page-bg-color");
+  }
+}

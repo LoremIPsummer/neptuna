@@ -1,0 +1,28 @@
+.neptuna-footer {
+  @include vertical-center-items(row);
+
+  padding: 1rem;
+  height: 10vh;
+
+  @include themify($themes) {
+    background-color: themed("footer-background-color");
+    color: themed("navbar-item-color");
+  }
+  color: $navbar-item-color;
+  font-weight: bold;
+
+  .copyright {
+    text-align: end !important;
+    align-self: center;
+  }
+
+  @include respond-below(md) {
+    justify-content: center;
+    height: 20vh;
+
+    .describe,
+    .copyright {
+      text-align: center !important;
+    }
+  }
+}

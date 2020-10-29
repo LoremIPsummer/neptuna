@@ -1,0 +1,24 @@
+.page-wrapper {
+  @include themify($themes) {
+    background-color: themed("page-bg-color");
+  }
+  height: auto;
+
+  .sidebar-image {
+    display: none;
+  }
+
+  fieldset {
+    height: auto;
+    border: 2px solid black !important;
+  }
+}
+
+@include respond-above(md) {
+  .page-wrapper {
+    .sidebar-image {
+      display: block;
+      object-fit: cover;
+    }
+  }
+}
