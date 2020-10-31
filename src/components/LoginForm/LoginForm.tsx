@@ -149,7 +149,7 @@ export default function LoginForm({ login }: LoginFormProps) {
               type="switch"
               id="rememberSwitch"
               label="Neptuna kód megjegyzése"
-              style={{ alignSelf: "end" }}
+
               onChange={() => setChecked(!checked)}
             />
           </Col>
