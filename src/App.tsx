@@ -14,6 +14,7 @@ import { Theme, ThemeContext } from "./util/ThemeContext";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./app/store";
 import CookieNotice from "./components/CookieNotice/CookieNotice";
+import UpScroller from "./components/UpScroller/UpScroller";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -24,6 +25,7 @@ function App() {
       <div className={`theme-${theme}`}>
         {loadState && <Spinner />}
         <ToastContainer />
+        <UpScroller />
         <ConnectedRouter history={history}>
           <Header />
           <Switch>

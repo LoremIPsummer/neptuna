@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./UpScroller.scoped.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 export default function UpScroller() {
-  window.addEventListener("scroll", (e) => scrollEvent);
+  const [showScroll, setShowScroll] = useState(false);
 
-  const [scrollState, setScrollState] = useState(0);
+  const checkScrollTop = () => {
+    if (!showScroll && window.pageYOffset > 50) {
+      setShowScroll(true);
+    } else if (showScroll && window.pageYOffset <= 50) {
+      setShowScroll(false);
+    }
+  };
 
-  function scrollEvent(e: React.UIEvent<HTMLElement>) {
-    setScrollState(document.body.getBoundingClientRect().top);
-    console.log(scrollState);
-  }
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  return <></>;
+  window.addEventListener("scroll", checkScrollTop);
+
+  return (
+    <div
+      className="neptuna-scroller"
+      style={{ display: showScroll ? "block" : "none" }}
+      onClick={() => scrollTop()}
+    >
+      <FontAwesomeIcon icon={faChevronUp} size={"4x"} />
+    </div>
+  );
 }
