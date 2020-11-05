@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { HamburgerProp } from "../../app/neptunaPropTypes";
 import "./Hamburger.scoped.scss";
 
 export default function Hamburger({ open, toggle }: HamburgerProp) {
@@ -15,3 +14,5 @@ export default function Hamburger({ open, toggle }: HamburgerProp) {
     </button>
   );
 }
+
+export type HamburgerProp = { open: boolean; toggle(): void };

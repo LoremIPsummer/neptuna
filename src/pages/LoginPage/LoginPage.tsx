@@ -9,6 +9,9 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 import { push } from "connected-react-router";
 import "./LoginPage.scoped.scss";
 import { Cookies, useCookies } from "react-cookie";
+import Breadcrumb, {
+  BreadcrumbProp,
+} from "../../components/Breadcrumb/Breadcrumb";
 
 export default function LoginPage() {
   const errors = useSelector(errorList);
@@ -23,16 +26,12 @@ export default function LoginPage() {
 
   return (
     <div className="page-wrapper p-3">
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <a href="#">Főoldal</a>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Belépési felület
-          </li>
-        </ol>
-      </nav>
+      <Breadcrumb
+        paths={[
+          { pathName: "Főoldal", pathUrl: "/" },
+          { pathName: "Bejelentkezési felület", pathUrl: "/belepes" },
+        ]}
+      />
       <Row noGutters className="justify-content-center">
         <Col xs={12} lg={6} className="my-auto">
           <fieldset className="border rounded p-3">
