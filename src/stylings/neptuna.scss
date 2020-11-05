@@ -92,9 +92,3 @@ input[type="password"],
     background-color: themed("navbar-background-color") !important;
   }
 }
-
-nav > ol.breadcrumb {
-  @include themify($themes) {
-    background-color: themed("navbar-background-color") !important;
-  }
-}

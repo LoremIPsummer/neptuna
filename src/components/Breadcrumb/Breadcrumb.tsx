@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./Breadcrumb.module.scss";
+import "./Breadcrumb.scoped.scss";
 
 export default function Breadcrumb({ paths } : BreadcrumbProp ) {
   const active = paths.pop();
