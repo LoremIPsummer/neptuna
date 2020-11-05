@@ -1,20 +1,28 @@
 @import "~hamburgers/_sass/hamburgers/hamburgers.scss";
 
-@include themify($themes) {
-  $hamburger-layer-color: themed("hamburger-color");
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  @include themify($themes) {
+    background-color: themed("hamburger-color") !important;
+  }
 }
 
 .hamburger {
   display: none;
-  &:focus {
-    outline: none;
-  }
 }
 
 @include respond-below(md) {
   .hamburger {
     margin-left: auto;
     display: inline-block;
-    border: 3px solid black;
+
+    @include themify($themes) {
+      border: 3px solid themed("border-color");
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 }
