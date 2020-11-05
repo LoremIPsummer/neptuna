@@ -2,6 +2,7 @@
   "name": "neptuna",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@craco/craco": "^5.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
