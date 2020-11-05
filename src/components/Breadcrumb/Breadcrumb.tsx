@@ -13,7 +13,7 @@ export default function Breadcrumb({ paths } : BreadcrumbProp ) {
               <Link to={path.pathUrl}>{path.pathName}</Link>
             </li>
           ))}
-          <li className="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page" key={active?.pathUrl}>
             {active?.pathName}
           </li>
         </ol>
