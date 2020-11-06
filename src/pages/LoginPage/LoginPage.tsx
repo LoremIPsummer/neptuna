@@ -43,13 +43,11 @@ export default function LoginPage() {
             <legend>Bejelentkezés</legend>
             <LoginForm
               login={(model: LoginRequest) => {
-                dispatcher(loginUserAsync(model));
-
-                setTimeout(() => {
+                Promise.resolve(dispatcher(loginUserAsync(model))).then(() => {
                   if (error.statusCode < 400) {
                     dispatcher(getUserDataAsync({}));
                   }
-                }, 4000);
+                });
               }}
             />
             <ErrorDialog error={error} />
