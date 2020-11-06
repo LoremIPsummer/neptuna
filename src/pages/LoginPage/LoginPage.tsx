@@ -16,6 +16,7 @@ import Breadcrumb, {
   BreadcrumbProp,
 } from "../../components/Breadcrumb/Breadcrumb";
 import { LoginRequest } from "../../services/axios-wrappers";
+import ErrorDialog from "../../components/ErrorDialog/ErrorDialog";
 
 export default function LoginPage() {
   const error = useSelector(errorList);
@@ -51,10 +52,7 @@ export default function LoginPage() {
                 }, 4000);
               }}
             />
-
-            {error.statusCode >= 400 && (
-              <div className="p-3 mb-2 bg-danger text-white">{error.error}</div>
-            )}
+            <ErrorDialog error={error} />
           </fieldset>
         </Col>
         <Col xs={12} lg={{ span: 3, offset: 3 }}>

@@ -108,7 +108,7 @@ export const userApiSlice = createSlice({
     builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
       state.current = action.payload.result;
       console.log(state.current);
-      // toast.success(action.payload.model.lastName, toastrConf);
+      toast.success(action.payload.result.lastName, toastrConf);
       state.isLoading = false;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
