@@ -5,7 +5,7 @@ import { Form, InputGroup, Row } from "react-bootstrap";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import ReCAPTCHA from "react-google-recaptcha";
-import { LoginRequest } from "../../app/features/userWrappers";
+import { LoginRequest } from "../../services/axios-wrappers";
 import {
   initialState,
   loginModelReducer,

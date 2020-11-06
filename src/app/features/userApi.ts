@@ -1,19 +1,30 @@
-import { createAction, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import { RootState, store, } from "../../app/store";
+import {
+  createAction,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+import { RootState, store } from "../../app/store";
 import { UserModel } from "../../models/user";
-import axios, { AxiosError } from "axios";
-import { LoginRequest, LoginResponse, ApiError } from "./userWrappers";
 import { toast } from "react-toastify";
+import {
+  loginUserAsyncPost,
+  userDataAsyncGet,
+} from "../../services/userService";
+import {
+  ApiError,
+  LoginRequest,
+  LoginResponse,
+  UserDataRequest,
+  UserDataResponse,
+} from "../../services/axios-wrappers";
+import {
+  isCurrentUserRetrieved,
+  isLoginSucceed,
+} from "../../services/typeguards";
 import { Cookies } from "react-cookie";
 
 const cookieManager = new Cookies();
-
-let baseUrl: string = process.env.REACT_APP_API_URL ?? "";
-let authToken = cookieManager.get("token");
-let axiosHeaders = authToken !== undefined
-  ? { headers: { Authorization: "Bearer " + authToken }, 'Content-Type': 'application/json'} 
-  : {};
-
 
 const toastrConf = {
   autoClose: 3000,
@@ -30,7 +41,7 @@ interface UserState {
   loadedMembers: UserModel[];
 }
 const initialState: UserState = {
-  error: { statusCode: undefined, error: undefined },
+  error: { statusCode: 200, error: "" },
   isLoading: false,
   current: {
     neptunaCode: "",
@@ -54,46 +65,23 @@ export const loginUserAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("users/login", async (loginModel, thunkApi) => {
-  try {
-    const response = await axios.post<LoginResponse>(
-      `${baseUrl}/users/login`,
-      loginModel
-    );
-    return response.data;
-  } catch (err) {
-    let axiosError = err as AxiosError;
-    let error: ApiError = {
-      error: axiosError.response?.data["errors"] ?? undefined,
-      statusCode: axiosError.response?.status ?? undefined,
-    };
-
-    return thunkApi.rejectWithValue(error);
-  }
+  return await loginUserAsyncPost(loginModel).then((resp) => {
+    return isLoginSucceed(resp) ? resp : thunkApi.rejectWithValue(resp);
+  });
 });
 
 export const getUserDataAsync = createAsyncThunk<
-  LoginResponse,
-  LoginRequest,
+  UserDataResponse,
+  UserDataRequest,
   {
     state: RootState;
     rejectValue: ApiError;
   }
->("users/login", async (loginModel, thunkApi) => {
-  try {
-    const response = await axios.post<LoginResponse>(
-      `${baseUrl}/users/login`,
-      loginModel
-    );
-    return response.data;
-  } catch (err) {
-    let axiosError = err as AxiosError;
-    let error: ApiError = {
-      error: axiosError.response?.data["errors"] ?? undefined,
-      statusCode: axiosError.response?.status ?? undefined,
-    };
-
-    return thunkApi.rejectWithValue(error);
-  }
+>("users/get/current", async (_, thunkApi) => {
+  const response = await userDataAsyncGet();
+  return isCurrentUserRetrieved(response)
+    ? response
+    : thunkApi.rejectWithValue(response);
 });
 
 export const userApiSlice = createSlice({
@@ -108,37 +96,42 @@ export const userApiSlice = createSlice({
     builder.addCase(loginUserAsync.pending, (state) => {
       state.isLoading = true;
     });
+    builder.addCase(getUserDataAsync.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(loginUserAsync.fulfilled, (state, action) => {
       toast.success("Sikeres belépés! Átirányítás...", toastrConf);
-      cookieManager.set("token", action.payload.token );
-      state.error = { error: undefined, statusCode: undefined };
+      state.error = { error: "", statusCode: 201 };
+      cookieManager.set("token", action.payload.token);
       state.isLoading = false;
-      
-      
+    });
+    builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
+      state.current = action.payload.result;
+      console.log(state.current);
+      // toast.success(action.payload.model.lastName, toastrConf);
+      state.isLoading = false;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
-      console.log("rejected ág");
       toast.error("Hiba történt a bejelentkezés közben!", toastrConf);
-      state.error = action.payload ?? {
-        error:
-          "A szolgáltatás nem elérhető! Ellenőrizze az internet kapcsolatát!",
-        statusCode: 503,
-      };
+      state.error = action.payload as ApiError;
+      cookieManager.remove("token");
       state.isLoading = false;
-      
+    });
+    builder.addCase(getUserDataAsync.rejected, (state, action) => {
+      console.log(action.payload);
+      state.error = action.payload as ApiError;
+      state.isLoading = false;
     });
   },
 });
 
 export const { setLoading } = userApiSlice.actions;
 
-
 // Szelektorok
 
 export const currentUser = (state: RootState) => {
   return state.userApi.current;
 };
-
 
 export const isLoading = (state: RootState) => {
   return state.userApi.isLoading;

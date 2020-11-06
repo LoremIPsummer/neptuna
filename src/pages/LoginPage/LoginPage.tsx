@@ -3,26 +3,30 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Image from "react-bootstrap/Image";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserAsync, errorList } from "../../app/features/userApi";
-import { LoginRequest } from "../../app/features/userWrappers";
+import {
+  loginUserAsync,
+  errorList,
+  currentUser,
+  getUserDataAsync,
+} from "../../app/features/userApi";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import { push } from "connected-react-router";
 import "./LoginPage.scoped.scss";
-import { Cookies, useCookies } from "react-cookie";
 import Breadcrumb, {
   BreadcrumbProp,
 } from "../../components/Breadcrumb/Breadcrumb";
+import { LoginRequest } from "../../services/axios-wrappers";
 
 export default function LoginPage() {
-  const errors = useSelector(errorList);
+  const error = useSelector(errorList);
+  const user = useSelector(currentUser);
   const dispatcher = useDispatch();
-  const [cookies, setCookies] = useCookies(["token"]);
 
   useEffect(() => {
-    if (cookies["token"] !== undefined) {
+    if (user.neptunaCode !== "") {
       dispatcher(push("/"));
     }
-  }, [dispatcher, cookies]);
+  }, [dispatcher, user]);
 
   return (
     <div className="page-wrapper p-3">
@@ -39,14 +43,17 @@ export default function LoginPage() {
             <LoginForm
               login={(model: LoginRequest) => {
                 dispatcher(loginUserAsync(model));
-                dispatcher(push("/"));
+
+                setTimeout(() => {
+                  if (error.statusCode < 400) {
+                    dispatcher(getUserDataAsync({}));
+                  }
+                }, 4000);
               }}
             />
 
-            {errors.error !== undefined && (
-              <div className="p-3 mb-2 bg-danger text-white">
-                {errors.error}
-              </div>
+            {error.statusCode >= 400 && (
+              <div className="p-3 mb-2 bg-danger text-white">{error.error}</div>
             )}
           </fieldset>
         </Col>

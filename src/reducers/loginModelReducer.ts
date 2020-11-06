@@ -1,4 +1,4 @@
-import { LoginRequest } from "../app/features/userWrappers";
+import { LoginRequest } from "../services/axios-wrappers";
 
 export const initialState: LoginRequest = {
   neptunaCode: localStorage.getItem("savedCode") ?? "",

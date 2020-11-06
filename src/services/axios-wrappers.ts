@@ -1,6 +1,7 @@
+import { UserModel } from "../models/user";
+
 export interface LoginResponse {
   token: string;
-  errorMessage: string | undefined;
 }
 export interface RegisterResponse {
   errorMessage: string | undefined;
@@ -18,6 +19,12 @@ export interface RegisterRequest {
 }
 
 export interface ApiError {
-  error: string | undefined;
-  statusCode: number | undefined;
+  error: string;
+  statusCode: number;
+}
+
+export interface UserDataRequest {}
+
+export interface UserDataResponse {
+  result: UserModel;
 }
