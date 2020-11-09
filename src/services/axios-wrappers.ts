@@ -21,6 +21,9 @@ export interface RegisterRequest {
 export interface ApiError {
   error: string;
   statusCode: number;
+  moreInfo?: string;
+  moreInfoType?: string;
+  moreInfoData?: string;
 }
 
 export interface UserDataRequest {}

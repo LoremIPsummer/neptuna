@@ -1,1 +1,11 @@
-.ErrorDialog {}
+.error-holder {
+  padding: $spacer;
+  margin-bottom: $spacer * 0.5;
+  @include themify($themes) {
+    color: themed("error-text-color");
+    background-color: themed("error-bg-color");
+  }
+  .btn {
+    margin-left: auto;
+  }
+}

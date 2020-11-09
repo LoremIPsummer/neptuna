@@ -15,6 +15,8 @@ $themes: (
     border-color: black,
     mobile-menu-background-color: #f5f5f5,
     hamburger-color: black,
+    error-text-color: #f6f6f6,
+    error-bg-color: #dc3545,
   ),
   dark: (
     text-color: #f6f6f6,
@@ -32,5 +34,7 @@ $themes: (
     border-color: white,
     mobile-menu-background-color: #222831,
     hamburger-color: #f6f6f6,
+    error-text-color: #f6f6f6,
+    error-bg-color: #dc3545,
   ),
 );

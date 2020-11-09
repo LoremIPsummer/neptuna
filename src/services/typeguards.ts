@@ -11,3 +11,9 @@ export function isCurrentUserRetrieved(
 ): response is UserDataResponse {
   return (response as UserDataResponse).result?.neptunaCode !== undefined;
 }
+
+export function isConfirmMailError(
+  response: boolean | ApiError
+): response is ApiError {
+  return (response as ApiError).statusCode !== undefined;
+}

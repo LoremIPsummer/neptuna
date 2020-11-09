@@ -41,7 +41,10 @@ interface UserState {
   loadedMembers: UserModel[];
 }
 const initialState: UserState = {
-  error: { statusCode: 200, error: "" },
+  error: {
+    statusCode: 200,
+    error: "",
+  },
   isLoading: false,
   current: {
     neptunaCode: "",
@@ -118,9 +121,10 @@ export const userApiSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(getUserDataAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      if (cookieManager.get("token") === undefined) return;
       console.log(action.payload);
       state.error = action.payload as ApiError;
-      state.isLoading = false;
     });
   },
 });
