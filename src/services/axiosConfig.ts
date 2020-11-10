@@ -13,6 +13,7 @@ globalAxios.interceptors.request.use(
         ? cookieManager.get("token")
         : ""}`,
         'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }
       return config;
     },

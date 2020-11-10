@@ -3,9 +3,7 @@ import { UserModel } from "../models/user";
 export interface LoginResponse {
   token: string;
 }
-export interface RegisterResponse {
-  errorMessage: string | undefined;
-}
+export interface RegisterResponse {}
 
 export interface LoginRequest {
   neptunaCode: string;

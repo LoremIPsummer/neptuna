@@ -1,8 +1,10 @@
 import {
+  Action,
   createAction,
   createAsyncThunk,
   createSlice,
   PayloadAction,
+  ThunkAction,
 } from "@reduxjs/toolkit";
 import { RootState, store } from "../../app/store";
 import { UserModel } from "../../models/user";
@@ -60,6 +62,8 @@ const initialState: UserState = {
   loadedMembers: [],
 };
 
+const resetInitialState = { ...initialState };
+
 export const loginUserAsync = createAsyncThunk<
   LoginResponse,
   LoginRequest,
@@ -94,6 +98,12 @@ export const userApiSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    logoutUser: (state) => {
+      cookieManager.remove("token");
+      state.current = resetInitialState.current;
+      console.log(state.current);
+      console.log(resetInitialState.current);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUserAsync.pending, (state) => {
@@ -110,8 +120,7 @@ export const userApiSlice = createSlice({
     });
     builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
       state.current = action.payload.result;
-      console.log(state.current);
-      toast.success(action.payload.result.lastName, toastrConf);
+      state.error = { error: "", statusCode: 200 };
       state.isLoading = false;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
@@ -122,6 +131,7 @@ export const userApiSlice = createSlice({
     });
     builder.addCase(getUserDataAsync.rejected, (state, action) => {
       state.isLoading = false;
+      state.current = initialState.current;
       if (cookieManager.get("token") === undefined) return;
       console.log(action.payload);
       state.error = action.payload as ApiError;
@@ -129,7 +139,7 @@ export const userApiSlice = createSlice({
   },
 });
 
-export const { setLoading } = userApiSlice.actions;
+export const { setLoading, logoutUser } = userApiSlice.actions;
 
 // Szelektorok
 

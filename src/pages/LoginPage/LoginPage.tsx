@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user.neptunaCode !== "") {
-      dispatcher(push("/"));
+      dispatcher(push("/profilom"));
     }
   }, [dispatcher, user]);
 

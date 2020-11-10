@@ -87,6 +87,7 @@ input[type="password"] {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
 .input-group-text {
   @include themify($themes) {
     background-color: themed("navbar-background-color") !important;

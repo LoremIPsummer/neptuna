@@ -14,11 +14,10 @@ export default function ErrorDialog({ error }: ErrorDialogProp) {
     dispatcher(setLoading(true));
     switch (moreInfoType) {
       case "email":{
-       
         const response = await resendConfirmAsyncPost(moreInfoData as string);
         if(isConfirmMailError(response)){toast.error(response.error)}
         else{toast.success("E-mail megerősítő levél sikeresen kiküldve.")}
-        
+        break;
       }
     }
     dispatcher(setLoading(false));

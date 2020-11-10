@@ -15,6 +15,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "./app/store";
 import CookieNotice from "./components/CookieNotice/CookieNotice";
 import UpScroller from "./components/UpScroller/UpScroller";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -32,6 +33,7 @@ function App() {
             <Route path="/" exact component={LandingPage} />
             <Route path="/belepes" exact component={LoginPage} />
             <Route path="/regisztracio" exact component={RegisterPage} />
+            <Route path="/profilom" exact component={ProfilePage} />
           </Switch>
           <CookieNotice />
           <Footer />
