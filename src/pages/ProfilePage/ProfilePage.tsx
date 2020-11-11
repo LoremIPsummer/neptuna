@@ -15,13 +15,13 @@ export default function ProfilePage() {
 
   useEffect(() => {
     dispatcher(getUserDataAsync({}));
-  }, []);
+  }, [dispatcher]);
   return (
     <div className="page-wrapper p-3">
       <Breadcrumb
         paths={[
           { pathName: "Főoldal", pathUrl: "/" },
-          { pathName: "Adataim", pathUrl: "/profilom" },
+          { pathName: "Személyes adataim", pathUrl: "/profilom" },
         ]}
       />
     </div>

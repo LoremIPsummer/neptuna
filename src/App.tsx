@@ -29,12 +29,14 @@ function App() {
         <UpScroller />
         <ConnectedRouter history={history}>
           <Header />
-          <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/belepes" exact component={LoginPage} />
-            <Route path="/regisztracio" exact component={RegisterPage} />
-            <Route path="/profilom" exact component={ProfilePage} />
-          </Switch>
+          <div className="page-container">
+            <Switch>
+              <Route path="/" exact component={LandingPage} />
+              <Route path="/belepes" exact component={LoginPage} />
+              <Route path="/regisztracio" exact component={RegisterPage} />
+              <Route path="/profilom" exact component={ProfilePage} />
+            </Switch>
+          </div>
           <CookieNotice />
           <Footer />
         </ConnectedRouter>

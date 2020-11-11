@@ -30,7 +30,7 @@ export default function LoginPage() {
   }, [dispatcher, user]);
 
   return (
-    <div className="page-wrapper p-3">
+    <>
       <Breadcrumb
         paths={[
           { pathName: "Főoldal", pathUrl: "/" },
@@ -61,6 +61,6 @@ export default function LoginPage() {
           />
         </Col>
       </Row>
-    </div>
+    </>
   );
 }

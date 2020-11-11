@@ -16,7 +16,7 @@ import "./LandingPage.scoped.scss";
 
 export default function LandingPage() {
   return (
-    <div className="neptuna-home-wrapper">
+    <div className="neptuna-landing-container">
       <div className="neptuna-intro">
         <Row noGutters={true}>
           <Col

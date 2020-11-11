@@ -20,7 +20,7 @@ export default function RegisterPage() {
   }, [dispatcher, user]);
 
   return (
-    <div className="page-wrapper p-3">
+    <>
       <Breadcrumb
         paths={[
           { pathName: "Főoldal", pathUrl: "/" },
@@ -35,8 +35,23 @@ export default function RegisterPage() {
           <Col lg={4}>
             <RegisterSidebar />
           </Col>
+          <Col lg={12}>
+            <RegisterSidebar />
+          </Col>
+          <Col lg={12}>
+            <RegisterSidebar />
+          </Col>
+          <Col lg={12}>
+            <RegisterSidebar />
+          </Col>
+          <Col lg={12}>
+            <RegisterSidebar />
+          </Col>
+          <Col lg={12}>
+            <RegisterSidebar />
+          </Col>
         </Row>
       </Container>
-    </div>
+    </>
   );
 }

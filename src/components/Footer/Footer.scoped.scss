@@ -1,8 +1,7 @@
 .neptuna-footer {
+  margin-top: auto !important;
   @include vertical-center-items(row);
-
   padding: 1rem;
-  height: 10vh;
 
   @include themify($themes) {
     background-color: themed("footer-background-color");
@@ -18,7 +17,6 @@
 
   @include respond-below(md) {
     justify-content: center;
-    height: 20vh;
 
     .describe,
     .copyright {

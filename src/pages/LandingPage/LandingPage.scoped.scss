@@ -1,5 +1,7 @@
 @import "~bootstrap-scss/bootstrap.scss";
-.neptuna-home-wrapper {
+
+.neptuna-landing-container {
+  margin: -$spacer;
   .neptuna-intro {
     .jumbotron {
       @include themify($themes) {
@@ -12,9 +14,6 @@
     }
 
     position: relative;
-    @include themify($themes) {
-      background-color: themed("page-bg-color");
-    }
 
     .neptuna-image {
       margin-bottom: 0;
@@ -52,9 +51,6 @@
   .neptuna-features {
     height: 30vh;
 
-    @include themify($themes) {
-      background-color: themed("page-bg-color");
-    }
     .card {
       margin-top: 1rem;
       padding: 1rem;
@@ -85,21 +81,10 @@
       }
     }
   }
-}
 
-// mobil
+  // mobil
 
-@include respond-below(md) {
-  .neptuna-home-wrapper {
-    .neptuna-intro {
-      .neptuna-image {
-        clip-path: none;
-      }
-    }
-    .neptuna-features {
-      height: 60vh;
-    }
-
+  @include respond-below(md) {
     .neptuna-intro {
       .neptuna-image {
         clip-path: none;
