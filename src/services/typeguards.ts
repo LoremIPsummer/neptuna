@@ -17,3 +17,9 @@ export function isConfirmMailError(
 ): response is ApiError {
   return (response as ApiError).statusCode !== undefined;
 }
+
+export function isUserVerifiedError(
+  response: boolean | ApiError
+): response is ApiError {
+  return (response as ApiError).statusCode !== undefined;
+}

@@ -16,6 +16,8 @@ import { history } from "./app/store";
 import CookieNotice from "./components/CookieNotice/CookieNotice";
 import UpScroller from "./components/UpScroller/UpScroller";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import PageContainer from "./components/PageContainer/PageContainer";
+import VerifyPage from "./pages/VerifyPage/VerifyPage";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -29,14 +31,15 @@ function App() {
         <UpScroller />
         <ConnectedRouter history={history}>
           <Header />
-          <div className="page-container">
+          <PageContainer>
             <Switch>
               <Route path="/" exact component={LandingPage} />
               <Route path="/belepes" exact component={LoginPage} />
               <Route path="/regisztracio" exact component={RegisterPage} />
               <Route path="/profilom" exact component={ProfilePage} />
+              <Route path="/megerosites" exact component={VerifyPage} />
             </Switch>
-          </div>
+          </PageContainer>
           <CookieNotice />
           <Footer />
         </ConnectedRouter>

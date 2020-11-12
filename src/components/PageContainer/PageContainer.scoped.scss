@@ -1,0 +1,8 @@
+.page-container {
+  padding: $spacer;
+  min-height: 80vh;
+  @include themify($themes) {
+    background-color: themed("page-bg-color");
+    color: themed("text-color");
+  }
+}

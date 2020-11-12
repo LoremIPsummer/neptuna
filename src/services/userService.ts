@@ -40,7 +40,7 @@ export const registerUserAsyncPost = async (
 };
 
 // POST
-// /users/login (R)
+// /users/login
 // return the jwt
 
 export const loginUserAsyncPost = async (
@@ -76,7 +76,7 @@ export const userDataAsyncGet = async (): Promise<
   UserDataResponse | ApiError
 > => {
 
-    const response = await globalAxios.get<UserDataResponse>(`/users`, ).then(resp => {
+    const response = await globalAxios.get<UserDataResponse>(`/users`).then(resp => {
       return resp.data;
     })
     .catch(error => {
@@ -133,5 +133,33 @@ export const resendConfirmAsyncPost = async (neptunaCode : string): Promise<
 
 
 // GET
-// /users/:neptunaCode/
-// resends the user confirmation mail to the user (if he hasnt confirmed it yet) on the log in page
+// /users/accountconfirm
+// Verifies the given neptuna code and token against the backend.
+
+
+export const verifyAccountAsyncGet = async (neptunaCode : string, token: string): Promise<
+  boolean | ApiError
+> => {
+    const response = await globalAxios.get<boolean>(`/users/accountconfirm?neptunacode=${neptunaCode}&token=${token}`).then(resp => {
+      return true;
+    })
+    .catch(error => {
+      const err = error as AxiosError;
+      console.log(err);
+      if (err.response) {
+        console.log(err.response);
+        return {
+          error: err.response.data["errors"] ?? "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
+          statusCode: err.response.status,
+        };
+      } else {
+        return {
+          error:
+            "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
+          statusCode: 503,
+        };
+      }
+    })
+
+    return response;
+};

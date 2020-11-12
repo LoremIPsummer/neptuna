@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentUser,
@@ -17,13 +18,13 @@ export default function ProfilePage() {
     dispatcher(getUserDataAsync({}));
   }, [dispatcher]);
   return (
-    <div className="page-wrapper p-3">
+    <>
       <Breadcrumb
         paths={[
           { pathName: "Főoldal", pathUrl: "/" },
           { pathName: "Személyes adataim", pathUrl: "/profilom" },
         ]}
       />
-    </div>
+    </>
   );
 }

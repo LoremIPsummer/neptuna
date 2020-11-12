@@ -109,9 +109,7 @@ export const userApiSlice = createSlice({
     builder.addCase(loginUserAsync.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getUserDataAsync.pending, (state) => {
-      state.isLoading = true;
-    });
+    builder.addCase(getUserDataAsync.pending, (state) => {});
     builder.addCase(loginUserAsync.fulfilled, (state, action) => {
       toast.success("Sikeres belépés! Átirányítás...", toastrConf);
       state.error = { error: "", statusCode: 201 };
