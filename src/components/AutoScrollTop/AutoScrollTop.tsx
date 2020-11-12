@@ -1,10 +1,13 @@
-import React from 'react';
-import styles from './AutoScrollTop.module.scss';
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import styles from "./AutoScrollTop.module.scss";
 
-const AutoScrollTop: React.FC = () => (
-  <div className={styles.AutoScrollTop}>
-    AutoScrollTop Component
-  </div>
-);
+export default function AutoScrollTop() {
+  const { pathname } = useLocation();
 
-export default AutoScrollTop;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}

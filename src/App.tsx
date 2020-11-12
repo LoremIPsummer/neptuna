@@ -18,6 +18,7 @@ import UpScroller from "./components/UpScroller/UpScroller";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PageContainer from "./components/PageContainer/PageContainer";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
+import AutoScrollTop from "./components/AutoScrollTop/AutoScrollTop";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -28,9 +29,10 @@ function App() {
       <div className={`theme-${theme}`}>
         {loadState && <Spinner />}
         <ToastContainer />
-        <UpScroller />
+
         <ConnectedRouter history={history}>
           <Header />
+          <AutoScrollTop />
           <PageContainer>
             <Switch>
               <Route path="/" exact component={LandingPage} />
@@ -41,6 +43,7 @@ function App() {
             </Switch>
           </PageContainer>
           <CookieNotice />
+          <UpScroller />
           <Footer />
         </ConnectedRouter>
       </div>

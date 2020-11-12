@@ -1,10 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./PageContainer.scoped.scss";
 
-type Pages = {
+type PageContainerProps = {
   children: ReactNode;
 };
 
-export default function PageContainer(props: Pages) {
-  return <div className="page-container">{props.children}</div>;
+export default function PageContainer({ children }: PageContainerProps) {
+  return <div className="page-container">{children}</div>;
 }
