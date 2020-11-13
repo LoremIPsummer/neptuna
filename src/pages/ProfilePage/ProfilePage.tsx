@@ -12,11 +12,7 @@ import "./ProfilePage.scoped.scss";
 export default function ProfilePage() {
   const error = useSelector(errorList);
   const user = useSelector(currentUser);
-  const dispatcher = useDispatch();
 
-  useEffect(() => {
-    dispatcher(getUserDataAsync({}));
-  }, [dispatcher]);
   return (
     <>
       <Breadcrumb
