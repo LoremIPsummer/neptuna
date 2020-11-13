@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect } from "react";
+import { Cookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { currentUser, getUserDataAsync } from "../../app/features/userApi";
 import "./PageContainer.scoped.scss";
 
@@ -8,12 +10,13 @@ type PageContainerProps = {
 };
 
 export default function PageContainer({ children }: PageContainerProps) {
-  const user = useSelector(currentUser);
   const dispatcher = useDispatch();
+  const { pathname } = useLocation();
+  const cookieManager = new Cookies();
 
   useEffect(() => {
-    dispatcher(getUserDataAsync({}));
-  }, [dispatcher, user]);
+    if (cookieManager.get("token")) dispatcher(getUserDataAsync({}));
+  }, [pathname]);
 
   return <div className="page-container">{children}</div>;
 }
