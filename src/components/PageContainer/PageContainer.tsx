@@ -15,6 +15,7 @@ export default function PageContainer({ children }: PageContainerProps) {
   const cookieManager = new Cookies();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (cookieManager.get("token")) dispatcher(getUserDataAsync({}));
   }, [pathname]);
 

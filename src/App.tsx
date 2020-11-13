@@ -32,7 +32,7 @@ function App() {
 
         <ConnectedRouter history={history}>
           <Header />
-          <AutoScrollTop />
+
           <PageContainer>
             <Switch>
               <Route path="/" exact component={LandingPage} />
