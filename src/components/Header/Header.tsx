@@ -42,7 +42,7 @@ export default function Header() {
               <Link to="#">Adataim</Link>
               <Navbar as="ul">
                 <Nav.Item as="li">
-                  <Link to="#">Személyes</Link>
+                  <Link to="#">Személyes adatok</Link>
                 </Nav.Item>
                 <Nav.Item as="li">
                   <Link to="#">Felvételi</Link>

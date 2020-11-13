@@ -43,7 +43,7 @@ body,
 
 .has-sub {
   .nav-item {
-    font-size: $navbar-item-size * 0.6 !important;
+    font-size: $navbar-item-size-sm !important;
     align-self: flex-start;
     margin-bottom: 0.3rem;
     border-bottom: 1px solid transparent;
