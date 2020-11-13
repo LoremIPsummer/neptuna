@@ -18,7 +18,6 @@ import UpScroller from "./components/UpScroller/UpScroller";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PageContainer from "./components/PageContainer/PageContainer";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
-import AutoScrollTop from "./components/AutoScrollTop/AutoScrollTop";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -32,7 +31,6 @@ function App() {
 
         <ConnectedRouter history={history}>
           <Header />
-
           <PageContainer>
             <Switch>
               <Route path="/" exact component={LandingPage} />

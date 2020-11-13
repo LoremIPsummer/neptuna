@@ -8,6 +8,9 @@ export interface UserModel {
   bornLocation: string;
   memberSince: string;
   bornDate: string;
+  bornCountry: string;
+  department: string;
   role: string;
+  lastlogin: string;
   subjects: SubjectModel[];
 }

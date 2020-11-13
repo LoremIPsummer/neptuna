@@ -10,7 +10,6 @@ import CookieNotice from "../CookieNotice/CookieNotice";
 export default function Footer() {
   return (
     <>
-      <div className="clearfix" />
       <Row noGutters={true} className="neptuna-footer noselect">
         <Col className="lead describe" xs={12} md={6}>
           NEPTUNA, a nyílt forráskódú tanulmányi rendszer.

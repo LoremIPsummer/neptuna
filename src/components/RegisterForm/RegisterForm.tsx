@@ -3,9 +3,9 @@ import { Form } from "react-bootstrap";
 import "./RegisterForm.scoped.scss";
 
 export default function RegisterForm() {
-  return <>
-  <Form>
-    
-  </Form>
-  </>;
+  return (
+    <>
+      <Form />
+    </>
+  );
 }

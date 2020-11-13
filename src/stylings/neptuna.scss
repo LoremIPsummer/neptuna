@@ -93,6 +93,12 @@ input[type="password"] {
   }
 }
 
+.jumbotron {
+  @include themify($themes) {
+    background-color: themed("page-divider-color");
+  }
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"],

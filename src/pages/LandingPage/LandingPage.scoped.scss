@@ -2,13 +2,14 @@
 
 .neptuna-landing-container {
   margin: -$spacer;
-  .neptuna-intro {
-    .jumbotron {
-      @include themify($themes) {
-        background-color: themed("page-bg-color");
-      }
-    }
 
+  .jumbotron {
+    @include themify($themes) {
+      background-color: themed("page-bg-color");
+    }
+  }
+
+  .neptuna-intro {
     .intro-text {
       line-height: 2;
     }
