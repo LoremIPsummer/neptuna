@@ -38,19 +38,42 @@ export default function Header() {
       >
         {user.neptunaCode !== "" && (
           <>
+            <Nav.Item as="li">
+              <Link to="/profilom">Adataim</Link>
+            </Nav.Item>
             <Nav.Item as="li" className="has-sub">
-              <Link to="#">Adataim</Link>
+              <Link to="#">Tárgyak</Link>
               <Navbar as="ul">
                 <Nav.Item as="li">
-                  <Link to="#">Személyes adatok</Link>
+                  <Link to="/orarend">Órarend</Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Link to="#">Felvételi</Link>
+                  <Link to="/targyaim">Felvett tárgyaim</Link>
+                </Nav.Item>
+                <Nav.Item as="li">
+                  <Link to="/targyfelvetel">Tárgyfelvétel</Link>
+                </Nav.Item>
+                <Nav.Item as="li">
+                  <Link to="/targyleadas">Tárgyleadás</Link>
+                </Nav.Item>
+              </Navbar>
+            </Nav.Item>
+            <Nav.Item as="li" className="has-sub">
+              <Link to="">Ügyintézés</Link>
+              <Navbar as="ul">
+                <Nav.Item as="li">
+                  <Link to="/kervenyek">Kérvények</Link>
+                </Nav.Item>
+                <Nav.Item as="li">
+                  <Link to="/bkervenyek">Beküldött kérvényeim</Link>
+                </Nav.Item>
+                <Nav.Item as="li">
+                  <Link to="/dokumentumok">Dokumentumok</Link>
                 </Nav.Item>
               </Navbar>
             </Nav.Item>
             <Nav.Item as="li">
-              <Link to="#">Tárgyak</Link>
+              <Link to="/statisztika">Statisztika</Link>
             </Nav.Item>
             <Nav.Item as="li" className="btn btn-default ml-lg-auto">
               <Link to="/" onClick={() => dispatcher(logoutUser())}>
