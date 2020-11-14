@@ -2,13 +2,14 @@ import { push } from "connected-react-router";
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser, errorList } from "../../app/features/userApi";
+import { error } from "../../app/features/errorApi";
+import { currentUser } from "../../app/features/userApi";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import "./RegisterPage.scoped.scss";
 
 export default function RegisterPage() {
-  const error = useSelector(errorList);
+  const errorState = useSelector(error);
   const user = useSelector(currentUser);
   const dispatcher = useDispatch();
 

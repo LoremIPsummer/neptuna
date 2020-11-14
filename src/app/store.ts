@@ -2,6 +2,9 @@ import { configureStore, ThunkAction, Action, Reducer } from "@reduxjs/toolkit";
 import { connectRouter, push, RouterState } from "connected-react-router";
 import { useDispatch } from "react-redux";
 import userApiReducer from "./features/userApi";
+import subjectApiReducer from "./features/subjectApi";
+import errorApiReducer from "./features/errorApi";
+import loadApiReducer from "./features/loadApi";
 import { createBrowserHistory, LocationState } from "history";
 import { routerMiddleware } from "connected-react-router";
 
@@ -9,7 +12,10 @@ export const history = createBrowserHistory();
 
 export const store = configureStore({
   reducer: {
-    userApi: userApiReducer,
+    users: userApiReducer,
+    error: errorApiReducer,
+    load: loadApiReducer,
+    subjects: subjectApiReducer,
     router: (connectRouter(history) as any) as Reducer<
       RouterState<LocationState>
     >,

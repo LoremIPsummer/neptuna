@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
-import { isLoading, setLoading } from "../../app/features/userApi";
+import { isLoading, setLoading } from "../../app/features/loadApi";
 import useQuery from "../../hooks/useQuery";
 import { ApiError } from "../../services/axios-wrappers";
 import { isUserVerifiedError } from "../../services/typeguards";

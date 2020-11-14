@@ -5,17 +5,14 @@ import Jumbotron from "react-bootstrap/esm/Jumbotron";
 import Row from "react-bootstrap/esm/Row";
 import Label from "react-bootstrap/lib/Label";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentUser,
-  errorList,
-  getUserDataAsync,
-} from "../../app/features/userApi";
+import { error } from "../../app/features/errorApi";
+import { currentUser, getUserDataAsync } from "../../app/features/userApi";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import PersonalDataTable from "../../components/PersonalDataTable/PersonalDataTable";
 import "./ProfilePage.scoped.scss";
 
 export default function ProfilePage() {
-  const error = useSelector(errorList);
+  const errorState = useSelector(error);
   const user = useSelector(currentUser);
 
   return (

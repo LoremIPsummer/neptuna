@@ -6,7 +6,7 @@ import {
   PayloadAction,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import { RootState, store } from "../../app/store";
+import { RootState, store } from "../store";
 import { UserModel } from "../../models/user";
 import { toast } from "react-toastify";
 import {
@@ -25,6 +25,8 @@ import {
   isLoginSucceed,
 } from "../../services/typeguards";
 import { Cookies } from "react-cookie";
+import { setLoadState } from "./loadApi";
+import { setErrorState } from "./errorApi";
 
 const cookieManager = new Cookies();
 
@@ -37,17 +39,10 @@ const toastrConf = {
 };
 
 interface UserState {
-  error: ApiError;
-  isLoading: boolean;
   current: UserModel;
   loadedMembers: UserModel[];
 }
 const initialState: UserState = {
-  error: {
-    statusCode: 200,
-    error: "",
-  },
-  isLoading: false,
   current: {
     neptunaCode: "",
     firstName: "",
@@ -75,8 +70,18 @@ export const loginUserAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("users/login", async (loginModel, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true));
   return await loginUserAsyncPost(loginModel).then((resp) => {
-    return isLoginSucceed(resp) ? resp : thunkApi.rejectWithValue(resp);
+    thunkApi.dispatch(setLoadState(false));
+    if (isLoginSucceed(resp)) {
+      thunkApi.dispatch(setErrorState({ error: "", statusCode: 201 }));
+      return resp;
+    } else {
+      thunkApi.dispatch(
+        setErrorState({ error: resp.error, statusCode: resp.statusCode })
+      );
+      return thunkApi.rejectWithValue(resp);
+    }
   });
 });
 
@@ -88,19 +93,25 @@ export const getUserDataAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("users/get/current", async (_, thunkApi) => {
-  const response = await userDataAsyncGet();
-  return isCurrentUserRetrieved(response)
-    ? response
-    : thunkApi.rejectWithValue(response);
+  thunkApi.dispatch(setLoadState(true));
+  return await userDataAsyncGet().then((resp) => {
+    thunkApi.dispatch(setLoadState(false));
+    if (isCurrentUserRetrieved(resp)) {
+      thunkApi.dispatch(setErrorState({ error: "", statusCode: 200 }));
+      return resp;
+    } else {
+      thunkApi.dispatch(
+        setErrorState({ error: resp.error, statusCode: resp.statusCode })
+      );
+      return thunkApi.rejectWithValue(resp);
+    }
+  });
 });
 
 export const userApiSlice = createSlice({
   name: "userApi",
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
     logoutUser: (state) => {
       cookieManager.remove("token");
       state.current = resetInitialState.current;
@@ -109,51 +120,33 @@ export const userApiSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loginUserAsync.pending, (state) => {
-      state.isLoading = true;
-    });
+    builder.addCase(loginUserAsync.pending, (state) => {});
     builder.addCase(getUserDataAsync.pending, (state) => {});
     builder.addCase(loginUserAsync.fulfilled, (state, action) => {
       toast.success("Sikeres belépés! Átirányítás...", toastrConf);
-      state.error = { error: "", statusCode: 201 };
       cookieManager.set("token", action.payload.token);
-      state.isLoading = false;
     });
     builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
       state.current = action.payload.result;
-      state.error = { error: "", statusCode: 200 };
-      state.isLoading = false;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
       toast.error("Hiba történt a bejelentkezés közben!", toastrConf);
-      state.error = action.payload as ApiError;
       cookieManager.remove("token");
-      state.isLoading = false;
     });
     builder.addCase(getUserDataAsync.rejected, (state, action) => {
-      state.isLoading = false;
       state.current = initialState.current;
       if (cookieManager.get("token") === undefined) return;
       console.log(action.payload);
-      state.error = action.payload as ApiError;
     });
   },
 });
 
-export const { setLoading, logoutUser } = userApiSlice.actions;
+export const { logoutUser } = userApiSlice.actions;
 
 // Szelektorok
 
 export const currentUser = (state: RootState) => {
-  return state.userApi.current;
-};
-
-export const isLoading = (state: RootState) => {
-  return state.userApi.isLoading;
-};
-
-export const errorList = (state: RootState) => {
-  return state.userApi.error;
+  return state.users.current;
 };
 
 export default userApiSlice.reducer;

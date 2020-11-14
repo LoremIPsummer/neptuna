@@ -7,7 +7,7 @@ import Footer from "./components/Footer/Footer";
 import Spinner from "./components/Spinner/Spinner";
 import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { isLoading } from "./app/features/userApi";
+import { isLoading } from "./app/features/loadApi";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import { Theme, ThemeContext } from "./util/ThemeContext";

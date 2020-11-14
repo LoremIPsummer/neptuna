@@ -30,7 +30,7 @@ export default function PersonalDataTable({ user }: PersonalDataTableProp) {
           </li>
           <li>
             <p className="lead">
-              Születési idő: {moment(user.bornDate).format("LLL")}
+              Születési idő: {moment(user.bornDate).format("yyyy.MM.DD")}
             </p>
           </li>
           <li>
@@ -50,10 +50,11 @@ export default function PersonalDataTable({ user }: PersonalDataTableProp) {
           <li>
             <p className="lead text-center">
               A neptuna rendszer tagja{" "}
-              <b>{moment(user.memberSince).format("LLL")}</b> óta.
+              <b>{moment(user.memberSince).format("yyyy.MM.DD")}</b> óta.
             </p>
             <p className="lead text-center">
-              Utolsó belépési idő <b>{moment(user.lastlogin).format("LLL")}</b>.
+              Utolsó belépési idő{" "}
+              <b>{moment(user.lastlogin).format("yyyy.MM.DD HH:mm")}</b>.
             </p>
           </li>
         </ul>

@@ -5,7 +5,6 @@ import Image from "react-bootstrap/Image";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loginUserAsync,
-  errorList,
   currentUser,
   getUserDataAsync,
 } from "../../app/features/userApi";
@@ -17,9 +16,10 @@ import Breadcrumb, {
 } from "../../components/Breadcrumb/Breadcrumb";
 import { LoginRequest } from "../../services/axios-wrappers";
 import ErrorDialog from "../../components/ErrorDialog/ErrorDialog";
+import { error } from "../../app/features/errorApi";
 
 export default function LoginPage() {
-  const error = useSelector(errorList);
+  const errorState = useSelector(error);
   const user = useSelector(currentUser);
   const dispatcher = useDispatch();
 
@@ -44,13 +44,11 @@ export default function LoginPage() {
             <LoginForm
               login={(model: LoginRequest) => {
                 Promise.resolve(dispatcher(loginUserAsync(model))).then(() => {
-                  if (error.statusCode < 400) {
-                    dispatcher(getUserDataAsync({}));
-                  }
+                  dispatcher(getUserDataAsync({}));
                 });
               }}
             />
-            <ErrorDialog error={error} />
+            <ErrorDialog error={errorState} />
           </fieldset>
         </Col>
         <Col xs={12} lg={{ span: 3, offset: 3 }}>

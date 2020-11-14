@@ -5,7 +5,7 @@ import { resendConfirmAsyncPost } from "../../services/userService";
 import "./ErrorDialog.scoped.scss";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { isLoading, setLoading } from "../../app/features/userApi";
+import { isLoading, setLoading } from "../../app/features/loadApi";
 import { isConfirmMailError } from "../../services/typeguards";
 
 export default function ErrorDialog({ error }: ErrorDialogProp) {
