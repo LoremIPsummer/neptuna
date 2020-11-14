@@ -35,6 +35,7 @@ interface UserState {
 }
 const initialState: UserState = {
   current: {
+    id: 0,
     neptunaCode: "",
     firstName: "",
     lastName: "",

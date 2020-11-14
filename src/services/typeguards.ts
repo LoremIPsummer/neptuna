@@ -1,4 +1,4 @@
-import { ApiError, LoginResponse, UserDataResponse } from "./axios-wrappers";
+import { ApiError, GetSubjectsResponse, LoginResponse, UserDataResponse } from "./axios-wrappers";
 
 export function isLoginSucceed(
   response: LoginResponse | ApiError
@@ -23,3 +23,8 @@ export function isUserVerifiedError(
 ): response is ApiError {
   return (response as ApiError).statusCode !== undefined;
 }
+
+export function isSubjectGetSuccess(response: GetSubjectsResponse | ApiError
+  ): response is GetSubjectsResponse {
+    return (response as GetSubjectsResponse).subjects !== undefined;
+  }

@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action, Reducer } from "@reduxjs/toolkit";
 import { connectRouter, push, RouterState } from "connected-react-router";
 import { useDispatch } from "react-redux";
 import userApiReducer from "./features/userApi";
+import messageApiReducer from "./features/messageApi";
 import subjectApiReducer from "./features/subjectApi";
 import errorApiReducer from "./features/errorApi";
 import loadApiReducer from "./features/loadApi";
@@ -15,6 +16,7 @@ export const store = configureStore({
     users: userApiReducer,
     error: errorApiReducer,
     load: loadApiReducer,
+    messages: messageApiReducer,
     subjects: subjectApiReducer,
     router: (connectRouter(history) as any) as Reducer<
       RouterState<LocationState>

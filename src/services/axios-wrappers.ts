@@ -1,3 +1,4 @@
+import { SubjectModel } from "../models/subject";
 import { UserModel } from "../models/user";
 
 export interface LoginResponse {
@@ -34,4 +35,14 @@ export interface UserDataRequest {}
 
 export interface UserDataResponse {
   result: UserModel;
+}
+
+export interface GetSubjectsRequest {
+  from?: number;
+  take?: number;
+  subjectCode?: string;
+}
+
+export interface GetSubjectsResponse {
+  subjects: SubjectModel[];
 }

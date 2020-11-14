@@ -1,6 +1,7 @@
 import { SubjectModel } from "./subject";
 
 export interface UserModel {
+  id: number;
   neptunaCode: string;
   firstName: string;
   lastName: string;
