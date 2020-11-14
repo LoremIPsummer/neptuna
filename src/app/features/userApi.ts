@@ -8,7 +8,6 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState, store } from "../store";
 import { UserModel } from "../../models/user";
-import { toast } from "react-toastify";
 import {
   loginUserAsyncPost,
   userDataAsyncGet,
@@ -29,14 +28,6 @@ import { setLoadState } from "./loadApi";
 import { setErrorState } from "./errorApi";
 
 const cookieManager = new Cookies();
-
-const toastrConf = {
-  autoClose: 3000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-};
 
 interface UserState {
   current: UserModel;
@@ -123,20 +114,17 @@ export const userApiSlice = createSlice({
     builder.addCase(loginUserAsync.pending, (state) => {});
     builder.addCase(getUserDataAsync.pending, (state) => {});
     builder.addCase(loginUserAsync.fulfilled, (state, action) => {
-      toast.success("Sikeres belépés! Átirányítás...", toastrConf);
       cookieManager.set("token", action.payload.token);
     });
     builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
       state.current = action.payload.result;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
-      toast.error("Hiba történt a bejelentkezés közben!", toastrConf);
       cookieManager.remove("token");
     });
     builder.addCase(getUserDataAsync.rejected, (state, action) => {
       state.current = initialState.current;
       if (cookieManager.get("token") === undefined) return;
-      console.log(action.payload);
     });
   },
 });
