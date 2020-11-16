@@ -5,13 +5,15 @@ import { ApiError, GetSubjectsRequest, GetSubjectsResponse } from "./axios-wrapp
 
 // Gets all the subjects with optional pagination settings
 export const listSubjectsAsyncGet = async (
-    req: GetSubjectsRequest
+    req?: GetSubjectsRequest
   ): Promise<GetSubjectsResponse | ApiError> => {
     try {
-      return (await globalAxios.post<GetSubjectsResponse>(`/subjects`, req)).data;
+      return (await globalAxios.get<GetSubjectsResponse>(`/subjects`)).data;
     } catch (error) {
       const err = error as AxiosError;
+      console.log(err.response?.data["errors"]);
       if (err.response) {
+          
         return {
           error: err.response.data["errors"] ?? "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
           statusCode: err.response.status,

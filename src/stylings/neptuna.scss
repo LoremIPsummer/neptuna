@@ -107,3 +107,15 @@ input[type="email"],
     background-color: themed("navbar-background-color") !important;
   }
 }
+
+// data table overrides
+
+.react-bootstrap-table {
+  tbody,
+  thead {
+    @include themify($themes) {
+      background-color: themed("page-bg-color") !important;
+      color: themed("text-color") !important;
+    }
+  }
+}

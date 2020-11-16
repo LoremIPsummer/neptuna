@@ -26,5 +26,5 @@ export function isUserVerifiedError(
 
 export function isSubjectGetSuccess(response: GetSubjectsResponse | ApiError
   ): response is GetSubjectsResponse {
-    return (response as GetSubjectsResponse).subjects !== undefined;
+    return (response as GetSubjectsResponse).result !== undefined;
   }

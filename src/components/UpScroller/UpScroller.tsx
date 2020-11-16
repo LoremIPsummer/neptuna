@@ -7,9 +7,9 @@ export default function UpScroller() {
   const [showScroll, setShowScroll] = useState(false);
 
   const checkScrollTop = () => {
-    if (!showScroll && window.pageYOffset > 50) {
+    if (!showScroll && window.pageYOffset > 70) {
       setShowScroll(true);
-    } else if (showScroll && window.pageYOffset <= 50) {
+    } else if (showScroll && window.pageYOffset <= 70) {
       setShowScroll(false);
     }
   };
@@ -26,7 +26,7 @@ export default function UpScroller() {
       style={{ display: showScroll ? "block" : "none" }}
       onClick={() => scrollTop()}
     >
-      <FontAwesomeIcon icon={faChevronUp} size={"4x"} />
+      <FontAwesomeIcon icon={faChevronUp} size={"3x"} />
     </div>
   );
 }

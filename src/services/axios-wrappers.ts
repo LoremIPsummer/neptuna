@@ -40,9 +40,8 @@ export interface UserDataResponse {
 export interface GetSubjectsRequest {
   from?: number;
   take?: number;
-  subjectCode?: string;
 }
 
 export interface GetSubjectsResponse {
-  subjects: SubjectModel[];
+  result: SubjectModel[];
 }

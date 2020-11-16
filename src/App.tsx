@@ -18,6 +18,7 @@ import UpScroller from "./components/UpScroller/UpScroller";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PageContainer from "./components/PageContainer/PageContainer";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
+import SubjectPage from "./pages/SubjectPage/SubjectPage";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -28,7 +29,6 @@ function App() {
       <div className={`theme-${theme}`}>
         {loadState && <Spinner />}
         <ToastContainer />
-
         <ConnectedRouter history={history}>
           <Header />
           <PageContainer>
@@ -38,6 +38,7 @@ function App() {
               <Route path="/regisztracio" exact component={RegisterPage} />
               <Route path="/profilom" exact component={ProfilePage} />
               <Route path="/megerosites" exact component={VerifyPage} />
+              <Route path="/targyak" exact component={SubjectPage} />
             </Switch>
           </PageContainer>
           <CookieNotice />
