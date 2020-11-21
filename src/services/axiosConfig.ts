@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Cookies } from "react-cookie";
 const cookieManager = new Cookies();
 const globalAxios = axios.create();
@@ -18,7 +18,24 @@ globalAxios.interceptors.request.use(
       return config;
     },
     error => {
-      Promise.reject(error)
+      const err = error as AxiosError;
+    
+      if (err.response) {
+        
+        return {
+          error: err.response.data["errors"] ?? "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
+          moreInfoType : err.response.data["moreInfoType"],
+          moreInfo: err.response.data["moreInfo"],
+          moreInfoData: err.response.data["moreInfoData"],
+          statusCode: err.response.status,
+        };
+      } else {
+        return {
+          error:
+            "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
+          statusCode: 503,
+        };
+      }
   });
 
 
