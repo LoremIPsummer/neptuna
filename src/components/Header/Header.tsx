@@ -42,7 +42,7 @@ export default function Header() {
               <Link to="/profilom">Adataim</Link>
             </Nav.Item>
             <Nav.Item as="li" className="has-sub">
-              <Link to="#">Tárgyak</Link>
+              <Link to="/targyak">Tárgyak</Link>
               <Navbar as="ul">
                 <Nav.Item as="li">
                   <Link to="/orarend">Órarend</Link>

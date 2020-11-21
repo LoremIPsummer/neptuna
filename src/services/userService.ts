@@ -50,7 +50,9 @@ export const loginUserAsyncPost = async (
     return (await globalAxios.post<LoginResponse>(`/users/login`, req)).data;
   } catch (error) {
     const err = error as AxiosError;
+    
     if (err.response) {
+      
       return {
         error: err.response.data["errors"] ?? "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
         moreInfoType : err.response.data["moreInfoType"],

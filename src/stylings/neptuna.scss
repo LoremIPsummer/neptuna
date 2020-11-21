@@ -119,3 +119,10 @@ input[type="email"],
     }
   }
 }
+
+.page-item {
+  @include themify($themes) {
+    background-color: themed("page-bg-color") !important;
+    color: themed("text-color") !important;
+  }
+}

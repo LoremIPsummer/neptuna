@@ -6,23 +6,32 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Spinner from "./components/Spinner/Spinner";
 import { ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { isLoading } from "./app/features/loadApi";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import { Theme, ThemeContext } from "./util/ThemeContext";
 import { ConnectedRouter } from "connected-react-router";
-import { history } from "./app/store";
+import { history, store } from "./app/store";
 import CookieNotice from "./components/CookieNotice/CookieNotice";
 import UpScroller from "./components/UpScroller/UpScroller";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PageContainer from "./components/PageContainer/PageContainer";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
 import SubjectPage from "./pages/SubjectPage/SubjectPage";
+import useErrorBoundary from "use-error-boundary";
+import showToast from "./services/toastrConfig";
+import { ToastOptions } from "./services/toastrConfig";
 
 function App() {
   const loadState = useSelector(isLoading);
   const [theme, setTheme] = useState(Theme.Default);
+
+  const { ErrorBoundary, didCatch, error } = useErrorBoundary({
+    onDidCatch: (error, errorInfo) => {
+      console.log(errorInfo);
+    },
+  });
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -33,12 +42,17 @@ function App() {
           <Header />
           <PageContainer>
             <Switch>
-              <Route path="/" exact component={LandingPage} />
-              <Route path="/belepes" exact component={LoginPage} />
-              <Route path="/regisztracio" exact component={RegisterPage} />
-              <Route path="/profilom" exact component={ProfilePage} />
-              <Route path="/megerosites" exact component={VerifyPage} />
-              <Route path="/targyak" exact component={SubjectPage} />
+              <ErrorBoundary>
+                <Route path="/" exact component={LandingPage} />
+                <Route path="/belepes" exact component={LoginPage} />
+                <Route path="/regisztracio" exact component={RegisterPage} />
+                <Route path="/profilom" exact component={ProfilePage} />
+                <Route
+                  path="/megerosites/:neptunacode/:token"
+                  component={VerifyPage}
+                />
+                <Route path="/targyak" exact component={SubjectPage} />
+              </ErrorBoundary>
             </Switch>
           </PageContainer>
           <CookieNotice />
