@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
 import { ApiError } from "../../services/axios-wrappers";
+import showToast, { ToastOptions } from "../../services/toastrConfig";
 
 interface ErrorState {
   error: ApiError;
@@ -18,6 +19,8 @@ export const errorApiSlice = createSlice({
   reducers: {
     setError: (state, action: PayloadAction<ApiError>) => {
       state.error = action.payload;
+      if(state.error.statusCode)
+      showToast(state.error.statusCode >= 400 ? ToastOptions.ERROR : ToastOptions.SUCCESS, state.error.error);
     },
   },
   extraReducers: (builder) => {},

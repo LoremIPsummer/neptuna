@@ -1,5 +1,4 @@
-import globalAxios from "./axiosConfig";
-import { AxiosError } from "axios";
+import globalAxios, {errorHandler} from "./axiosConfig";
 import {
   ApiError,
   GetSubjectsRequest,
@@ -10,5 +9,11 @@ import {
 export const listSubjectsAsyncGet = async (
   req?: GetSubjectsRequest
 ): Promise<GetSubjectsResponse | ApiError> => {
-  return (await globalAxios.get<GetSubjectsResponse>(`/subjects`)).data;
+  try{
+    return (await globalAxios.get<GetSubjectsResponse>(`/subjects`)).data;
+  }
+  catch(err){
+    return errorHandler(err);
+  }
+  
 };

@@ -1,9 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from "react-cookie";
+import { ApiError } from './axios-wrappers';
 const cookieManager = new Cookies();
 const globalAxios = axios.create();
 
-globalAxios.defaults.baseURL = process.env.REACT_APP_API_URL ?? ""
+globalAxios.defaults.baseURL = process.env.BACKEND_URL;
 globalAxios.defaults.headers.common['Content-Type'] = 'application/json';
 
 globalAxios.interceptors.request.use(
@@ -17,26 +18,22 @@ globalAxios.interceptors.request.use(
       }
       return config;
     },
-    error => {
-      const err = error as AxiosError;
-    
-      if (err.response) {
-        
-        return {
-          error: err.response.data["errors"] ?? "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
-          moreInfoType : err.response.data["moreInfoType"],
-          moreInfo: err.response.data["moreInfo"],
-          moreInfoData: err.response.data["moreInfoData"],
-          statusCode: err.response.status,
-        };
-      } else {
-        return {
-          error:
-            "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
-          statusCode: 503,
-        };
-      }
-  });
+  );
+
+  export const errorHandler = (error: any) => {
+    const err = error as AxiosError;
+    let errorObject : ApiError = {
+      error: err.response?.data["errors"] ?? "Nem sikerült a szerverhez kapcsolódás. Ellenőrizze az internetkapcsolatát!",
+      moreInfoType : err.response?.data["moreInfoType"],
+      moreInfo: err.response?.data["moreInfo"],
+      moreInfoData: err.response?.data["moreInfoData"],
+      statusCode: err.response?.status ?? 503,
+    };
+
+    return errorObject;
+  }
+
+
 
 
 

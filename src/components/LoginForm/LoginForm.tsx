@@ -30,7 +30,7 @@ export default function LoginForm({ login }: LoginFormProps) {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/
     ) !== null &&
     loginModel.neptunaCode.length === 6 &&
-    loginModel.recaptcha !== "";
+    (process.env.NODE_ENV !== 'production' || loginModel.recaptcha !== "");
 
   function handleSubmit(e: FormEvent<HTMLElement>) {
     e.preventDefault();

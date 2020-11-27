@@ -63,17 +63,19 @@ export const loginUserAsync = createAsyncThunk<
   }
 >("users/login", async (loginModel, thunkApi) => {
   thunkApi.dispatch(setLoadState(true));
+
   return await loginUserAsyncPost(loginModel).then((resp) => {
-    thunkApi.dispatch(setLoadState(false));
-    if (isLoginSucceed(resp)) {
-      thunkApi.dispatch(setErrorState({ error: "", statusCode: 201 }));
-      return resp;
-    } else {
-      thunkApi.dispatch(
-        setErrorState({ error: resp.error, statusCode: resp.statusCode })
-      );
-      return thunkApi.rejectWithValue(resp);
-    }
+
+      thunkApi.dispatch(setLoadState(false));
+      if (isLoginSucceed(resp)) {
+        thunkApi.dispatch(setErrorState({ error: "", statusCode: 201 }));
+        return resp;
+      } else {
+        thunkApi.dispatch(
+          setErrorState({ error: resp.error, statusCode: resp.statusCode })
+        );
+        return thunkApi.rejectWithValue(resp);
+      }
   });
 });
 
