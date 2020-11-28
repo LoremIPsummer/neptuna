@@ -22,6 +22,7 @@ import SubjectPage from "./pages/SubjectPage/SubjectPage";
 import useErrorBoundary from "use-error-boundary";
 import showToast from "./services/toastrConfig";
 import { ToastOptions } from "./services/toastrConfig";
+import AuthGuard from "./components/AuthGuard/AuthGuard";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -46,12 +47,14 @@ function App() {
                 <Route path="/" exact component={LandingPage} />
                 <Route path="/belepes" exact component={LoginPage} />
                 <Route path="/regisztracio" exact component={RegisterPage} />
-                <Route path="/profilom" exact component={ProfilePage} />
                 <Route
                   path="/megerosites/:neptunacode/:token"
                   component={VerifyPage}
                 />
+                <AuthGuard>
+                 <Route path="/profilom" exact component={ProfilePage} />
                 <Route path="/targyak" exact component={SubjectPage} />
+                </AuthGuard>
               </ErrorBoundary>
             </Switch>
           </PageContainer>

@@ -10,5 +10,6 @@
       "withStory": false,
       "withLazy": false
     }
-  }
+  },
+  "testLibrary": "None"
 }

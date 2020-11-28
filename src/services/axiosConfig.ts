@@ -38,7 +38,6 @@ globalAxios.interceptors.request.use(
       statusCode: err.response?.status ?? 503,
     };
 
-    console.log(errorObject);
     showToast(ToastOptions.ERROR, errorObject.error);
     return errorObject;
   }
