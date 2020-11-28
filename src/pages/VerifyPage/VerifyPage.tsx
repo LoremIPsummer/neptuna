@@ -1,10 +1,9 @@
-import { AxiosError } from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { isLoading, setLoading } from "../../app/features/loadApi";
 import { ApiError } from "../../services/axios-wrappers";
+import showToast, { ToastOptions } from "../../services/toastrConfig";
 import { isUserVerifiedError } from "../../services/typeguards";
 import { verifyAccountAsyncGet } from "../../services/userService";
 import "./VerifyPage.scoped.scss";
@@ -31,9 +30,8 @@ export default function VerifyPage() {
       dispatcher(setLoading(true));
       await verifyAccountAsyncGet(neptunaCode, token).then((resp) => {
         dispatcher(setLoading(false));
-        isUserVerifiedError(resp)
-          ? toast.error(resp.error)
-          : toast.success("Sikeres megerősítés!");
+        if(!isUserVerifiedError(resp))
+        showToast(ToastOptions.SUCCESS, "Sikeres megerősítés");
         shouldRedirect.current = true;
         setResult(resp);
       });

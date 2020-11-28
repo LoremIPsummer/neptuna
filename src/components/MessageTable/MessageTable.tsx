@@ -23,12 +23,12 @@ export default function MessageTable({ user }: MessageTableProp) {
         hover
         variant={theme === Theme.Dark ? "dark" : "default"}
       >
-        <thead>
+
           <th>Időpont</th>
           <th>Feladó</th>
           <th>Tárgy</th>
           <th>Megnyitás</th>
-        </thead>
+
         <tbody>
           <tr />
         </tbody>

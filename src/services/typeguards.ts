@@ -9,7 +9,7 @@ export function isLoginSucceed(
 export function isCurrentUserRetrieved(
   response: UserDataResponse | ApiError
 ): response is UserDataResponse {
-  return (response as UserDataResponse).result?.neptunaCode !== undefined;
+  return (response as UserDataResponse).user !== undefined;
 }
 
 export function isConfirmMailError(
@@ -26,5 +26,5 @@ export function isUserVerifiedError(
 
 export function isSubjectGetSuccess(response: GetSubjectsResponse | ApiError
   ): response is GetSubjectsResponse {
-    return (response as GetSubjectsResponse).result !== undefined;
+    return (response as GetSubjectsResponse).subjects !== undefined;
   }

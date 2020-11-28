@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from "react-cookie";
-import { ApiError } from './axios-wrappers';
+import { ApiError, BaseResponse } from './axios-wrappers';
+import showToast, { ToastOptions } from './toastrConfig';
 const cookieManager = new Cookies();
 const globalAxios = axios.create();
 
@@ -20,6 +21,13 @@ globalAxios.interceptors.request.use(
     },
   );
 
+
+  globalAxios.interceptors.response.use((response) => {
+    const baseResponse = response["data"] as BaseResponse;
+    showToast(ToastOptions.SUCCESS, baseResponse.result);
+    return response;
+});
+
   export const errorHandler = (error: any) => {
     const err = error as AxiosError;
     let errorObject : ApiError = {
@@ -30,6 +38,8 @@ globalAxios.interceptors.request.use(
       statusCode: err.response?.status ?? 503,
     };
 
+    console.log(errorObject);
+    showToast(ToastOptions.ERROR, errorObject.error);
     return errorObject;
   }
 

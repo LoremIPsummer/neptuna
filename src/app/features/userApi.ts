@@ -120,7 +120,7 @@ export const userApiSlice = createSlice({
       cookieManager.set("token", action.payload.token);
     });
     builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
-      state.current = action.payload.result;
+      state.current = action.payload.user;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
       cookieManager.remove("token");

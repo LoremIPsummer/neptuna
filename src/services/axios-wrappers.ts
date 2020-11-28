@@ -1,11 +1,15 @@
 import { SubjectModel } from "../models/subject";
 import { UserModel } from "../models/user";
 
-export interface LoginResponse {
+export interface BaseResponse{
+  result : string;
+}
+
+export interface LoginResponse extends BaseResponse {
   token: string;
 }
 
-export interface RegisterResponse {}
+export interface RegisterResponse extends BaseResponse {}
 
 export interface LoginRequest {
   neptunaCode: string;
@@ -33,8 +37,8 @@ export interface ApiError {
 
 export interface UserDataRequest {}
 
-export interface UserDataResponse {
-  result: UserModel;
+export interface UserDataResponse extends BaseResponse {
+  user: UserModel;
 }
 
 export interface GetSubjectsRequest {
@@ -42,6 +46,6 @@ export interface GetSubjectsRequest {
   take?: number;
 }
 
-export interface GetSubjectsResponse {
-  result: SubjectModel[];
+export interface GetSubjectsResponse extends BaseResponse {
+  subjects: SubjectModel[];
 }

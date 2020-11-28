@@ -56,7 +56,7 @@ export const subjectApiSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getSubjectsAsync.fulfilled, (state, action) => {
-      state.loadedSubjects = action.payload.result;
+      state.loadedSubjects = action.payload.subjects;
     });
     builder.addCase(getSubjectsAsync.rejected, (state, action) => {});
   },
