@@ -1,8 +1,8 @@
 import { SubjectModel } from "../models/subject";
 import { UserModel } from "../models/user";
 
-export interface BaseResponse{
-  result : string;
+export interface BaseResponse {
+  result: string;
 }
 
 export interface LoginResponse extends BaseResponse {

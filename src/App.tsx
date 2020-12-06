@@ -1,28 +1,22 @@
 import React, { useState } from "react";
 import "./App.scss";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import { Router, Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Spinner from "./components/Spinner/Spinner";
 import { ToastContainer } from "react-toastify";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { isLoading } from "./app/features/loadApi";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import { Theme, ThemeContext } from "./util/ThemeContext";
 import { ConnectedRouter } from "connected-react-router";
-import { history, store } from "./app/store";
+import { history } from "./app/store";
 import CookieNotice from "./components/CookieNotice/CookieNotice";
 import UpScroller from "./components/UpScroller/UpScroller";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PageContainer from "./components/PageContainer/PageContainer";
-import VerifyPage from "./pages/VerifyPage/VerifyPage";
-import SubjectPage from "./pages/SubjectPage/SubjectPage";
 import useErrorBoundary from "use-error-boundary";
-import showToast from "./services/toastrConfig";
-import { ToastOptions } from "./services/toastrConfig";
 import AuthGuard from "./components/AuthGuard/AuthGuard";
+import withSuspense from "./HOC/withSuspense";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 function App() {
   const loadState = useSelector(isLoading);
@@ -33,6 +27,18 @@ function App() {
       console.log(errorInfo);
     },
   });
+
+  const ProfilePage = React.lazy(() =>
+    import("./pages/ProfilePage/ProfilePage")
+  );
+  const LoginPage = React.lazy(() => import("./pages/LoginPage/LoginPage"));
+  const RegisterPage = React.lazy(() =>
+    import("./pages/RegisterPage/RegisterPage")
+  );
+  const SubjectPage = React.lazy(() =>
+    import("./pages/SubjectPage/SubjectPage")
+  );
+  const VerifyPage = React.lazy(() => import("./pages/VerifyPage/VerifyPage"));
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -45,15 +51,31 @@ function App() {
             <Switch>
               <ErrorBoundary>
                 <Route path="/" exact component={LandingPage} />
-                <Route path="/belepes" exact component={LoginPage} />
-                <Route path="/regisztracio" exact component={RegisterPage} />
+                <Route
+                  path="/belepes"
+                  exact
+                  component={withSuspense(LoginPage)}
+                />
+                <Route
+                  path="/regisztracio"
+                  exact
+                  component={withSuspense(RegisterPage)}
+                />
                 <Route
                   path="/megerosites/:neptunacode/:token"
-                  component={VerifyPage}
+                  component={withSuspense(VerifyPage)}
                 />
                 <AuthGuard>
-                 <Route path="/profilom" exact component={ProfilePage} />
-                <Route path="/targyak" exact component={SubjectPage} />
+                  <Route
+                    path="/profilom"
+                    exact
+                    render={withSuspense(ProfilePage)}
+                  />
+                  <Route
+                    path="/targyak"
+                    exact
+                    component={withSuspense(SubjectPage)}
+                  />
                 </AuthGuard>
               </ErrorBoundary>
             </Switch>

@@ -11,7 +11,7 @@ export default function SubjectPage() {
 
   useEffect(() => {
     dispatcher(getSubjectsAsync({}));
-  }, []);
+  }, [dispatcher]);
   return (
     <>
       <Breadcrumb

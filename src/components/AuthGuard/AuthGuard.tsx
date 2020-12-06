@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { currentUser } from '../../app/features/userApi';
+import React, { ReactNode, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useLocation } from 'react-router-dom';
+import { currentUser, getUserDataAsync } from '../../app/features/userApi';
+import {Cookies} from "react-cookie";
 
 
 type AuthGuardProps = {
@@ -9,12 +10,18 @@ type AuthGuardProps = {
 };
 
 export default function AuthGuard({children} : AuthGuardProps){
-  const user = useSelector(currentUser);
+  const cookieManager = new Cookies();
+  const dispatcher = useDispatch();
+  const { pathname } = useLocation();
 
-  if(user.neptunaCode === "")
-  return <Redirect to="/"/>
+  useEffect(() => {
+    if(cookieManager.get("token") !== undefined)
+    {
+      dispatcher(getUserDataAsync({}));
+    }
+  }, [pathname]);
 
-  return <>{children}</>
+  return cookieManager.get("token") !== undefined ? <>{children}</> : <Redirect to="/"/>
 }
 
 

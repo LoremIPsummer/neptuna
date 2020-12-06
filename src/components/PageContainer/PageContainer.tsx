@@ -10,13 +10,11 @@ type PageContainerProps = {
 };
 
 export default function PageContainer({ children }: PageContainerProps) {
-  const dispatcher = useDispatch();
+ 
   const { pathname } = useLocation();
-  const cookieManager = new Cookies();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (cookieManager.get("token")) dispatcher(getUserDataAsync({}));
   }, [pathname]);
 
   return <div className="page-container">{children}</div>;
