@@ -21,3 +21,5 @@ export function loginModelReducer(
       throw new Error();
   }
 }
+
+export default loginModelReducer;

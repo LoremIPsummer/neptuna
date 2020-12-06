@@ -1,8 +1,6 @@
 import React from "react";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
+import { Col, Row } from "react-bootstrap";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
 import "./CookieNotice.scoped.scss";
 
 export default function CookieNotice() {

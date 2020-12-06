@@ -1,84 +1,91 @@
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import "./App.scss";
 import { Route, Switch } from "react-router-dom";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import Spinner from "./components/Spinner/Spinner";
+import {
+  Header,
+  Footer,
+  Spinner,
+  CookieNotice,
+  UpScroller,
+  PageContainer,
+  AuthGuard,
+} from "./components";
 import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
-import { isLoading } from "./app/features/loadApi";
-import { Theme, ThemeContext } from "./util/ThemeContext";
+import { Theme, ThemeContext } from "./context/ThemeContext";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./app/store";
-import CookieNotice from "./components/CookieNotice/CookieNotice";
-import UpScroller from "./components/UpScroller/UpScroller";
-import PageContainer from "./components/PageContainer/PageContainer";
 import useErrorBoundary from "use-error-boundary";
-import AuthGuard from "./components/AuthGuard/AuthGuard";
-import withSuspense from "./HOC/withSuspense";
-import LandingPage from "./pages/LandingPage/LandingPage";
+import { useLoading } from "./hooks";
 
 function App() {
-  const loadState = useSelector(isLoading);
-  const [theme, setTheme] = useState(Theme.Default);
+  const { isLoading } = useLoading();
 
-  const { ErrorBoundary, didCatch, error } = useErrorBoundary({
-    onDidCatch: (error, errorInfo) => {
-      console.log(errorInfo);
-    },
-  });
+  const [theme, setTheme] = useState(
+    window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? Theme.Dark
+      : Theme.Default
+  );
 
-  const ProfilePage = React.lazy(() =>
-    import("./pages/ProfilePage/ProfilePage")
-  );
-  const LoginPage = React.lazy(() => import("./pages/LoginPage/LoginPage"));
-  const RegisterPage = React.lazy(() =>
-    import("./pages/RegisterPage/RegisterPage")
-  );
-  const SubjectPage = React.lazy(() =>
-    import("./pages/SubjectPage/SubjectPage")
-  );
-  const VerifyPage = React.lazy(() => import("./pages/VerifyPage/VerifyPage"));
+  const { ErrorBoundary } = useErrorBoundary();
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <div className={`theme-${theme}`}>
-        {loadState && <Spinner />}
+        {isLoading && <Spinner />}
         <ToastContainer />
         <ConnectedRouter history={history}>
           <Header />
           <PageContainer>
-            <Switch>
-              <ErrorBoundary>
-                <Route path="/" exact component={LandingPage} />
-                <Route
-                  path="/belepes"
-                  exact
-                  component={withSuspense(LoginPage)}
-                />
-                <Route
-                  path="/regisztracio"
-                  exact
-                  component={withSuspense(RegisterPage)}
-                />
-                <Route
-                  path="/megerosites/:neptunacode/:token"
-                  component={withSuspense(VerifyPage)}
-                />
-                <AuthGuard>
+            <Suspense fallback={null}>
+              <Switch>
+                <ErrorBoundary>
                   <Route
-                    path="/profilom"
+                    path="/"
                     exact
-                    render={withSuspense(ProfilePage)}
+                    component={lazy(() =>
+                      import("./pages/LandingPage/LandingPage")
+                    )}
                   />
                   <Route
-                    path="/targyak"
+                    path="/belepes"
                     exact
-                    component={withSuspense(SubjectPage)}
+                    component={lazy(() =>
+                      import("./pages/LoginPage/LoginPage")
+                    )}
                   />
-                </AuthGuard>
-              </ErrorBoundary>
-            </Switch>
+                  <Route
+                    path="/regisztracio"
+                    exact
+                    component={lazy(() =>
+                      import("./pages/RegisterPage/RegisterPage")
+                    )}
+                  />
+                  <Route
+                    path="/megerosites/:neptunacode/:token"
+                    component={lazy(() =>
+                      import("./pages/VerifyPage/VerifyPage")
+                    )}
+                  />
+                  <AuthGuard>
+                    <Route
+                      path="/profilom"
+                      exact
+                      component={lazy(() =>
+                        import("./pages/ProfilePage/ProfilePage")
+                      )}
+                    />
+                    <Route
+                      path="/targyak"
+                      exact
+                      component={lazy(() =>
+                        import("./pages/SubjectPage/SubjectPage")
+                      )}
+                    />
+                  </AuthGuard>
+                </ErrorBoundary>
+              </Switch>
+            </Suspense>
           </PageContainer>
           <CookieNotice />
           <UpScroller />

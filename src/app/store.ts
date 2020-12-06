@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action, Reducer } from "@reduxjs/toolkit";
-import { connectRouter, push, RouterState } from "connected-react-router";
+import { connectRouter, RouterState } from "connected-react-router";
 import { useDispatch } from "react-redux";
 import userApiReducer from "./features/userApi";
 import messageApiReducer from "./features/messageApi";

@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Jumbotron from "react-bootstrap/esm/Jumbotron";
-import { useDispatch, useSelector } from "react-redux";
-import { getSubjectsAsync, subjects } from "../../app/features/subjectApi";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import SubjectTable from "../../components/SubjectTable/SubjectTable";
+import { useSubjects } from "../../hooks";
+import { Breadcrumb, SubjectTable } from "../../components";
 
 export default function SubjectPage() {
-  const dispatcher = useDispatch();
-  const subjectsState = useSelector(subjects);
+  const { sync } = useSubjects();
 
   useEffect(() => {
-    dispatcher(getSubjectsAsync({}));
-  }, [dispatcher]);
+    sync();
+  }, []);
   return (
     <>
       <Breadcrumb
@@ -23,7 +20,6 @@ export default function SubjectPage() {
       <Jumbotron as="div">
         <h1 className="display-3">Tantárgyak</h1>
       </Jumbotron>
-      <SubjectTable subjects={subjectsState} />
     </>
   );
 }

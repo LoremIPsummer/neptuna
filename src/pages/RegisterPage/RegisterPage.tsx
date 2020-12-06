@@ -4,8 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { error } from "../../app/features/errorApi";
 import { currentUser } from "../../app/features/userApi";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import RegisterForm from "../../components/RegisterForm/RegisterForm";
+import { Breadcrumb, RegisterForm } from "../../components/";
 import "./RegisterPage.scoped.scss";
 
 export default function RegisterPage() {

@@ -1,12 +1,5 @@
-import {
-  Action,
-  createAction,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  ThunkAction,
-} from "@reduxjs/toolkit";
-import { RootState, store } from "../store";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 import { SubjectModel } from "../../models/subject";
 import {
   ApiError,
@@ -47,8 +40,6 @@ export const getSubjectsAsync = createAsyncThunk<
     }
   });
 });
-
-const resetInitialState = { ...initialState };
 
 export const subjectApiSlice = createSlice({
   name: "subjectApi",

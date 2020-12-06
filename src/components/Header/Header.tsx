@@ -1,24 +1,19 @@
 import React, { useState } from "react";
-import { Link, BrowserRouter as Router } from "react-router-dom";
-import Hamburger from "../Hamburger/Hamburger";
+import { Link } from "react-router-dom";
+import { Hamburger } from "../index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "react-bootstrap/esm/Navbar";
-import Nav from "react-bootstrap/esm/Nav";
-import { useSelector, useDispatch } from "react-redux";
+import { Navbar, Nav } from "react-bootstrap";
 import "./Header.scoped.scss";
-import { currentUser, logoutUser } from "../../app/features/userApi";
-import { Cookies } from "react-cookie";
-import { push } from "connected-react-router";
+import { useUser } from "../../hooks";
 
 export default function Header() {
   const [openLogic, setOpen] = useState({ open: false, firstOpen: true });
-  const user = useSelector(currentUser);
-  const dispatcher = useDispatch();
+  const { user, logout } = useUser();
 
   function handleToggle() {
     setOpen({ open: !openLogic.open, firstOpen: false });
@@ -76,7 +71,7 @@ export default function Header() {
               <Link to="/statisztika">Statisztika</Link>
             </Nav.Item>
             <Nav.Item as="li" className="btn btn-default ml-lg-auto">
-              <Link to="/" onClick={() => dispatcher(logoutUser())}>
+              <Link to="/" onClick={() => logout()}>
                 <FontAwesomeIcon icon={faSignOutAlt} /> Kijelentkezés
               </Link>
             </Nav.Item>

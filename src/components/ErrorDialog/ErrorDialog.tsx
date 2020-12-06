@@ -1,17 +1,18 @@
-import React, { useReducer, useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/esm/Button";
-import { ApiError } from "../../services/axios-wrappers";
 import { resendConfirmAsyncPost } from "../../services/userService";
 import "./ErrorDialog.scoped.scss";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoading, setLoading } from "../../app/features/loadApi";
+import { useLoading } from "../../hooks";
 import { isConfirmMailError } from "../../services/typeguards";
+import { ErrorDialogProp } from "../proptypes";
 
 export default function ErrorDialog({ error }: ErrorDialogProp) {
-  const dispatcher = useDispatch();
+
+  const {setLoading} = useLoading();
+
   const processLink = async (moreInfoType: string, moreInfoData? : string) => {
-    dispatcher(setLoading(true));
+    setLoading(true);
     switch (moreInfoType) {
       case "email":{
         const response = await resendConfirmAsyncPost(moreInfoData as string);
@@ -20,7 +21,7 @@ export default function ErrorDialog({ error }: ErrorDialogProp) {
         break;
       }
     }
-    dispatcher(setLoading(false));
+    setLoading(false);
   }
   return (
     <>
@@ -34,6 +35,4 @@ export default function ErrorDialog({ error }: ErrorDialogProp) {
   );
 }
 
-export type ErrorDialogProp = {
-  error: ApiError;
-};
+

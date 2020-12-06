@@ -1,10 +1,6 @@
 import React from "react";
-
 import Typed from "react-typed";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import Image from "react-bootstrap/Image";
-import Jumbotron from "react-bootstrap/esm/Jumbotron";
+import { Row, Col, Image, Jumbotron } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUniversity,

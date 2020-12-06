@@ -1,33 +1,26 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import Image from "react-bootstrap/Image";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  loginUserAsync,
-  currentUser,
-  getUserDataAsync,
-} from "../../app/features/userApi";
-import LoginForm from "../../components/LoginForm/LoginForm";
-import { push } from "connected-react-router";
-import "./LoginPage.scoped.scss";
-import Breadcrumb, {
-  BreadcrumbProp,
-} from "../../components/Breadcrumb/Breadcrumb";
+import React, { lazy } from "react";
+import { Image, Col, Row } from "react-bootstrap";
+import { LoginForm, ErrorDialog, Breadcrumb } from "../../components/";
 import { LoginRequest } from "../../services/axios-wrappers";
-import ErrorDialog from "../../components/ErrorDialog/ErrorDialog";
-import { error } from "../../app/features/errorApi";
+import "./LoginPage.scoped.scss";
+import { useError, useRedirect, useUser } from "../../hooks";
+import { Redirect } from "react-router-dom";
+import withSuspense from "../../HOC/withSuspense";
 
 export default function LoginPage() {
-  const errorState = useSelector(error);
-  const user = useSelector(currentUser);
-  const dispatcher = useDispatch();
+  const { error } = useError();
+  const { loggedIn, login } = useUser();
+  const { redirect } = useRedirect();
 
-  useEffect(() => {
-    if (user.neptunaCode !== "") {
-      dispatcher(push("/profilom"));
-    }
-  }, [dispatcher, user]);
+  if (loggedIn) return <Redirect to="/" />;
+
+  const handleLogin = (model: LoginRequest) => {
+    Promise.resolve(login(model)).then(() => {
+      redirect("/profilom");
+    });
+  };
+
+  const Form = withSuspense(lazy<typeof LoginForm>(() => LoginForm));
 
   return (
     <>
@@ -41,14 +34,8 @@ export default function LoginPage() {
         <Col xs={12} lg={6} className="my-auto">
           <fieldset className="border rounded p-3">
             <legend>Bejelentkezés</legend>
-            <LoginForm
-              login={(model: LoginRequest) => {
-                Promise.resolve(dispatcher(loginUserAsync(model))).then(() => {
-                  dispatcher(getUserDataAsync({}));
-                });
-              }}
-            />
-            <ErrorDialog error={errorState} />
+            <Form />
+            <ErrorDialog error={error} />
           </fieldset>
         </Col>
         <Col xs={12} lg={{ span: 3, offset: 3 }}>

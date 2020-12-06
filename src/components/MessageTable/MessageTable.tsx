@@ -1,14 +1,9 @@
 import React from "react";
-import Jumbotron from "react-bootstrap/esm/Jumbotron";
-import Table from "react-bootstrap/esm/Table";
+import { Jumbotron, Table } from "react-bootstrap";
 import { useTheme } from "../../hooks/useTheme";
-import { UserModel } from "../../models/user";
-import { Theme } from "../../util/ThemeContext";
-import styles from "./MessageTable.module.scss";
-
-export type MessageTableProp = {
-  user: UserModel;
-};
+import { Theme } from "../../context/ThemeContext";
+import "./MessageTable.scoped.scss";
+import { MessageTableProp } from "../proptypes";
 
 export default function MessageTable({ user }: MessageTableProp) {
   const { theme } = useTheme();
@@ -23,15 +18,12 @@ export default function MessageTable({ user }: MessageTableProp) {
         hover
         variant={theme === Theme.Dark ? "dark" : "default"}
       >
+        <th>Időpont</th>
+        <th>Feladó</th>
+        <th>Tárgy</th>
+        <th>Megnyitás</th>
 
-          <th>Időpont</th>
-          <th>Feladó</th>
-          <th>Tárgy</th>
-          <th>Megnyitás</th>
-
-        <tbody>
-          <tr />
-        </tbody>
+        <tbody />
       </Table>
     </Jumbotron>
   );

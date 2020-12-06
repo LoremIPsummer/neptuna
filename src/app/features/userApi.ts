@@ -1,12 +1,5 @@
-import {
-  Action,
-  createAction,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  ThunkAction,
-} from "@reduxjs/toolkit";
-import { RootState, store } from "../store";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 import { UserModel } from "../../models/user";
 import {
   loginUserAsyncPost,
@@ -65,17 +58,16 @@ export const loginUserAsync = createAsyncThunk<
   thunkApi.dispatch(setLoadState(true));
 
   return await loginUserAsyncPost(loginModel).then((resp) => {
-
-      thunkApi.dispatch(setLoadState(false));
-      if (isLoginSucceed(resp)) {
-        thunkApi.dispatch(setErrorState({ error: "", statusCode: 201 }));
-        return resp;
-      } else {
-        thunkApi.dispatch(
-          setErrorState({ error: resp.error, statusCode: resp.statusCode })
-        );
-        return thunkApi.rejectWithValue(resp);
-      }
+    thunkApi.dispatch(setLoadState(false));
+    if (isLoginSucceed(resp)) {
+      thunkApi.dispatch(setErrorState({ error: "", statusCode: 201 }));
+      return resp;
+    } else {
+      thunkApi.dispatch(
+        setErrorState({ error: resp.error, statusCode: resp.statusCode })
+      );
+      return thunkApi.rejectWithValue(resp);
+    }
   });
 });
 
@@ -138,6 +130,10 @@ export const { logoutUser } = userApiSlice.actions;
 
 export const currentUser = (state: RootState) => {
   return state.users.current;
+};
+
+export const loggedIn = (state: RootState) => {
+  return state.users.current.neptunaCode !== "";
 };
 
 export default userApiSlice.reducer;

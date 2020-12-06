@@ -1,12 +1,8 @@
 import React from "react";
-import { UserModel } from "../../models/user";
 import "./PersonalDataTable.scoped.scss";
 import Jumbotron from "react-bootstrap/esm/Jumbotron";
 import moment from "moment";
-
-export type PersonalDataTableProp = {
-  user: UserModel;
-};
+import { PersonalDataTableProp } from "../proptypes";
 
 export default function PersonalDataTable({ user }: PersonalDataTableProp) {
   moment.locale();

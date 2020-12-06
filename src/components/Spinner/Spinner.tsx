@@ -1,8 +1,8 @@
 import React from "react";
 import "./Spinner.scoped.scss";
-import Image from "react-bootstrap/Image";
+import { Image } from "react-bootstrap";
 import { useTheme } from "../../hooks/useTheme";
-import { Theme } from "../../util/ThemeContext";
+import { Theme } from "../../context/ThemeContext";
 
 export default function Spinner() {
   const { theme } = useTheme();

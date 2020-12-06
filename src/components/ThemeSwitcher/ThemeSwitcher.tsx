@@ -2,7 +2,7 @@ import React from "react";
 import "./ThemeSwitcher.scoped.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { Theme } from "../../util/ThemeContext";
+import { Theme } from "../../context/ThemeContext";
 import { useTheme } from "../../hooks/useTheme";
 
 export default function ThemeSwitcher() {

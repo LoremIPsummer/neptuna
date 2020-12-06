@@ -1,22 +1,19 @@
 import { faKey, faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ChangeEvent, FormEvent, useReducer, useState } from "react";
-import { Form, InputGroup, Row } from "react-bootstrap";
-import Button from "react-bootstrap/esm/Button";
-import Col from "react-bootstrap/esm/Col";
+import React, { FormEvent, useReducer, useState } from "react";
+import { Form, InputGroup, Row , Button, Col} from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
-import { LoginRequest } from "../../services/axios-wrappers";
 import {
   initialState,
   loginModelReducer,
 } from "../../reducers/loginModelReducer";
 import "./LoginForm.scoped.scss";
-import {Theme} from "../../util/ThemeContext";
+import {Theme} from "../../context/ThemeContext";
 import { useTheme } from "../../hooks/useTheme";
+import { LoginFormProps } from "../proptypes";
 
-interface LoginFormProps {
-  login(model: LoginRequest): void;
-}
+
+
 
 export default function LoginForm({ login }: LoginFormProps) {
   const recaptchaRef = React.createRef<ReCAPTCHA>();

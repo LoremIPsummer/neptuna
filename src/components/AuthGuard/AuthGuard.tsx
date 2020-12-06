@@ -1,27 +1,23 @@
-import React, { ReactNode, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useLocation } from 'react-router-dom';
-import { currentUser, getUserDataAsync } from '../../app/features/userApi';
-import {Cookies} from "react-cookie";
+import React, { useEffect } from "react";
+import { Redirect, useLocation } from "react-router-dom";
+import { Cookies } from "react-cookie";
+import { useUser } from "../../hooks";
+import { AuthGuardProps } from "../proptypes";
 
-
-type AuthGuardProps = {
-  children: ReactNode;
-};
-
-export default function AuthGuard({children} : AuthGuardProps){
+export default function AuthGuard({ children }: AuthGuardProps) {
   const cookieManager = new Cookies();
-  const dispatcher = useDispatch();
   const { pathname } = useLocation();
+  const { sync } = useUser();
 
   useEffect(() => {
-    if(cookieManager.get("token") !== undefined)
-    {
-      dispatcher(getUserDataAsync({}));
+    if (cookieManager.get("token") !== undefined) {
+      sync();
     }
   }, [pathname]);
 
-  return cookieManager.get("token") !== undefined ? <>{children}</> : <Redirect to="/"/>
+  return cookieManager.get("token") !== undefined ? (
+    <>{children}</>
+  ) : (
+    <Redirect to="/" />
+  );
 }
-
-
