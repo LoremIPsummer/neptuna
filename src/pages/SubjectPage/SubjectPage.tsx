@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Jumbotron from "react-bootstrap/esm/Jumbotron";
-import { useSubjects } from "../../hooks";
+import { useSubjects, useTitle } from "../../hooks";
 import { Breadcrumb, SubjectTable } from "../../components";
 
 export default function SubjectPage() {
   const { sync } = useSubjects();
+  useTitle("Tantárgyak");
 
   useEffect(() => {
     sync();

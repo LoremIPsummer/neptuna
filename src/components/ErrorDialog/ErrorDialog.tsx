@@ -5,9 +5,9 @@ import "./ErrorDialog.scoped.scss";
 import { toast } from "react-toastify";
 import { useLoading } from "../../hooks";
 import { isConfirmMailError } from "../../services/typeguards";
-import { ErrorDialogProp } from "../proptypes";
+import { ErrorDialogProps } from "../proptypes";
 
-export default function ErrorDialog({ error }: ErrorDialogProp) {
+export default function ErrorDialog({ error }: ErrorDialogProps) {
 
   const {setLoading} = useLoading();
 

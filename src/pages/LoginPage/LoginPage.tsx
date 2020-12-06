@@ -3,7 +3,7 @@ import { Image, Col, Row } from "react-bootstrap";
 import { LoginForm, ErrorDialog, Breadcrumb } from "../../components/";
 import { LoginRequest } from "../../services/axios-wrappers";
 import "./LoginPage.scoped.scss";
-import { useError, useRedirect, useUser } from "../../hooks";
+import { useError, useRedirect, useTitle, useUser } from "../../hooks";
 import { Redirect } from "react-router-dom";
 import withSuspense from "../../HOC/withSuspense";
 
@@ -11,16 +11,9 @@ export default function LoginPage() {
   const { error } = useError();
   const { loggedIn, login } = useUser();
   const { redirect } = useRedirect();
+  useTitle("Bejelentkezés");
 
   if (loggedIn) return <Redirect to="/" />;
-
-  const handleLogin = (model: LoginRequest) => {
-    Promise.resolve(login(model)).then(() => {
-      redirect("/profilom");
-    });
-  };
-
-  const Form = withSuspense(lazy<typeof LoginForm>(() => LoginForm));
 
   return (
     <>
@@ -34,7 +27,13 @@ export default function LoginPage() {
         <Col xs={12} lg={6} className="my-auto">
           <fieldset className="border rounded p-3">
             <legend>Bejelentkezés</legend>
-            <Form />
+            <LoginForm
+              login={(model: LoginRequest) => {
+                Promise.resolve(login(model)).then(() => {
+                  redirect("/profilom");
+                });
+              }}
+            />
             <ErrorDialog error={error} />
           </fieldset>
         </Col>

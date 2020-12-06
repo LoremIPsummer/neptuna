@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Redirect, useParams } from "react-router-dom";
-import { useLoading } from "../../hooks";
+import { useLoading, useTitle } from "../../hooks";
 import { ApiError } from "../../services/axios-wrappers";
 import showToast, { ToastOptions } from "../../services/toastrConfig";
 import { isUserVerifiedError } from "../../services/typeguards";
@@ -14,6 +14,7 @@ interface VerifyPageParams {
 
 export default function VerifyPage() {
   const { setLoading } = useLoading();
+  useTitle("Megerősítés");
 
   let { neptunacode, token } = useParams<VerifyPageParams>();
   const [result, setResult] = useState<boolean | ApiError>({

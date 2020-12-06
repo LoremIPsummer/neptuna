@@ -9,8 +9,11 @@ import {
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
 import "./LandingPage.scoped.scss";
+import { useTitle } from "../../hooks";
 
 export default function LandingPage() {
+  useTitle("Főoldal");
+
   return (
     <div className="neptuna-landing-container">
       <div className="neptuna-intro">

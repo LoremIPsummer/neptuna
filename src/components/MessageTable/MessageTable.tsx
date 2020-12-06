@@ -3,9 +3,9 @@ import { Jumbotron, Table } from "react-bootstrap";
 import { useTheme } from "../../hooks/useTheme";
 import { Theme } from "../../context/ThemeContext";
 import "./MessageTable.scoped.scss";
-import { MessageTableProp } from "../proptypes";
+import { MessageTableProps } from "../proptypes";
 
-export default function MessageTable({ user }: MessageTableProp) {
+export default function MessageTable({ user }: MessageTableProps) {
   const { theme } = useTheme();
 
   return (

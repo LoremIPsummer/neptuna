@@ -7,21 +7,21 @@ export type AuthGuardProps = {
   children: ReactNode;
 };
 
-export type BreadcrumbProp = {
+export type BreadcrumbProps = {
   paths: Array<{ pathName: string; pathUrl: string }>;
 };
 
-export type ErrorDialogProp = {
+export type ErrorDialogProps = {
   error: ApiError;
 };
 
-export type HamburgerProp = { open: boolean; toggle(): void };
+export type HamburgerProps = { open: boolean; toggle(): void };
 
 export type LoginFormProps = {
   login(model: LoginRequest): void;
 };
 
-export type MessageTableProp = {
+export type MessageTableProps = {
   user: UserModel;
 };
 
@@ -29,7 +29,7 @@ export type PageContainerProps = {
   children: ReactNode;
 };
 
-export type PersonalDataTableProp = {
+export type PersonalDataTableProps = {
   user: UserModel;
 };
 
@@ -39,7 +39,4 @@ export type SubjectTableProps = {
     teacherName: string;
     studentsCount: number;
   }>;
-  model: SubjectModel;
-  teacherName: string;
-  studentsCount: number;
 };

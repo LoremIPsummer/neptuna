@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { BreadcrumbProp } from "../proptypes";
+import { BreadcrumbProps } from "../proptypes";
 import "./Breadcrumb.scoped.scss";
 
-export default function Breadcrumb({ paths } : BreadcrumbProp ) {
+export default function Breadcrumb({ paths } : BreadcrumbProps ) {
   const active = paths.pop();
   return (
     <>

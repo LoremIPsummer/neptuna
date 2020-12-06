@@ -10,11 +10,12 @@ import { currentUser, getUserDataAsync } from "../../app/features/userApi";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import MessageTable from "../../components/MessageTable/MessageTable";
 import PersonalDataTable from "../../components/PersonalDataTable/PersonalDataTable";
+import { useTitle } from "../../hooks";
 import "./ProfilePage.scoped.scss";
 
 export default function ProfilePage() {
-  const errorState = useSelector(error);
   const user = useSelector(currentUser);
+  useTitle("Profilom");
 
   return (
     <>
