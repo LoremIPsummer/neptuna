@@ -6,7 +6,7 @@ export const useSubjects = () => {
 
   return {
     subjects: useSelector(subjects),
-    sync: () => dispatcher(getSubjectsAsync),
+    sync: () => dispatcher(getSubjectsAsync({})),
   };
 };
 

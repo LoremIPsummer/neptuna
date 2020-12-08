@@ -126,9 +126,3 @@ input[type="email"],
     color: themed("text-color") !important;
   }
 }
-
-.neptuna-modal {
-  @include themify($themes) {
-    background-color: themed("page-divider-color") !important;
-  }
-}

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { RootState, store } from "../store";
 import { SubjectModel } from "../../models/subject";
 import {
   ApiError,
@@ -26,19 +26,16 @@ export const getSubjectsAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("subjects", async (req, thunkApi) => {
-  thunkApi.dispatch(setLoadState(true));
-  return await listSubjectsAsyncGet(req).then((resp) => {
-    thunkApi.dispatch(setLoadState(false));
-    if (isSubjectGetSuccess(resp)) {
-      thunkApi.dispatch(setErrorState({ error: "", statusCode: 200 }));
-      return resp;
-    } else {
-      thunkApi.dispatch(
-        setErrorState({ error: resp.error, statusCode: resp.statusCode })
-      );
-      return thunkApi.rejectWithValue(resp);
-    }
-  });
+  const resp = await listSubjectsAsyncGet(req);
+  if (!isSubjectGetSuccess(resp)) {
+    thunkApi.dispatch(
+      setErrorState({ error: resp.error, statusCode: resp.statusCode })
+    );
+    return thunkApi.rejectWithValue(resp);
+  } else {
+    thunkApi.dispatch(setErrorState({ error: "", statusCode: 200 }));
+    return resp;
+  }
 });
 
 export const subjectApiSlice = createSlice({
@@ -46,10 +43,14 @@ export const subjectApiSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getSubjectsAsync.pending, (state, action) => {});
     builder.addCase(getSubjectsAsync.fulfilled, (state, action) => {
       state.loadedSubjects = action.payload.subjects;
+      console.log(state.loadedSubjects);
     });
-    builder.addCase(getSubjectsAsync.rejected, (state, action) => {});
+    builder.addCase(getSubjectsAsync.rejected, (state, action) => {
+      console.log(action.payload);
+    });
   },
 });
 

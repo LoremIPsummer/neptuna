@@ -16,6 +16,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "./app/store";
 import useErrorBoundary from "use-error-boundary";
 import { useLoading } from "./hooks";
+import { useDispatch } from "react-redux";
+import { getSubjectsAsync } from "./app/features/subjectApi";
 
 function App() {
   const { isLoading } = useLoading();

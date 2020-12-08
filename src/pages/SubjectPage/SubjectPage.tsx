@@ -9,6 +9,7 @@ export default function SubjectPage() {
   useEffect(() => {
     sync();
   }, []);
+
   return (
     <>
       <Breadcrumb
