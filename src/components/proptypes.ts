@@ -40,3 +40,16 @@ export type SubjectTableProps = {
     studentsCount: number;
   }>;
 };
+
+export type BaseModalProps = {
+  data: {
+    title: string;
+    body: string;
+    OkMethod?: () => void;
+    OkText?: string;
+    CancelMethod?: () => void;
+    CancelText?: string;
+  };
+  isShown: boolean;
+  closeModal: () => void;
+};

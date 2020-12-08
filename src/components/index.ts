@@ -16,3 +16,4 @@ export { default as Spinner } from "./Spinner/Spinner";
 export { default as SubjectTable } from "./SubjectTable/SubjectTable";
 export { default as ThemeSwitcher } from "./ThemeSwitcher/ThemeSwitcher";
 export { default as UpScroller } from "./UpScroller/UpScroller";
+export { default as BaseModal } from "./BaseModal/BaseModal";
