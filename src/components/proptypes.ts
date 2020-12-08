@@ -53,3 +53,8 @@ export type BaseModalProps = {
   isShown: boolean;
   closeModal: () => void;
 };
+
+export type PageHeadingProps = {
+  title: string;
+  alignment?: string;
+};

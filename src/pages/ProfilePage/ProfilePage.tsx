@@ -6,7 +6,7 @@ import Row from "react-bootstrap/esm/Row";
 import Label from "react-bootstrap/lib/Label";
 import { useDispatch, useSelector } from "react-redux";
 import { error } from "../../app/features/errorApi";
-import { currentUser, getUserDataAsync } from "../../app/features/userApi";
+import { currentUser } from "../../app/features/userApi";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import MessageTable from "../../components/MessageTable/MessageTable";
 import PersonalDataTable from "../../components/PersonalDataTable/PersonalDataTable";
@@ -25,11 +25,7 @@ export default function ProfilePage() {
           { pathName: "Adataim", pathUrl: "/profilom" },
         ]}
       />
-      <Jumbotron>
-        <h1 className="text-center display-2">
-          {user.firstName + " " + user.lastName}
-        </h1>
-      </Jumbotron>
+      <PageHeading title={user.neptunaCode} />
       <Row noGutters className="content">
         <Col sm={12} lg={7}>
           <MessageTable user={user} />
