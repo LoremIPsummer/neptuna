@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Jumbotron from "react-bootstrap/esm/Jumbotron";
+import React, { useEffect } from "react";
 import { useSubjects, useTitle } from "../../hooks";
-import { Breadcrumb, SubjectTable } from "../../components";
+import { Breadcrumb, PageHeading, SubjectTable } from "../../components";
 
 export default function SubjectPage() {
   const { sync } = useSubjects();
@@ -18,9 +17,11 @@ export default function SubjectPage() {
           { pathName: "Tantárgyak", pathUrl: "/targyak" },
         ]}
       />
-      <Jumbotron as="div">
-        <h1 className="display-3">Tantárgyak</h1>
-      </Jumbotron>
+      <PageHeading
+        title="Tantárgyak"
+        alignment="left"
+        mobileAlignment="center"
+      />
     </>
   );
 }

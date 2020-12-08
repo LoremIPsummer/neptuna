@@ -1,20 +1,14 @@
-import React, { useEffect } from "react";
-import { useRef } from "react";
-import Col from "react-bootstrap/esm/Col";
-import Jumbotron from "react-bootstrap/esm/Jumbotron";
-import Row from "react-bootstrap/esm/Row";
-import Label from "react-bootstrap/lib/Label";
-import { useDispatch, useSelector } from "react-redux";
-import { error } from "../../app/features/errorApi";
-import { currentUser } from "../../app/features/userApi";
+import React from "react";
+import { Row, Col } from "react-bootstrap";
+import { PageHeading } from "../../components";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import MessageTable from "../../components/MessageTable/MessageTable";
 import PersonalDataTable from "../../components/PersonalDataTable/PersonalDataTable";
-import { useTitle } from "../../hooks";
+import { useTitle, useUser } from "../../hooks";
 import "./ProfilePage.scoped.scss";
 
 export default function ProfilePage() {
-  const user = useSelector(currentUser);
+  const { user } = useUser();
   useTitle("Profilom");
 
   return (

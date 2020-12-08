@@ -57,4 +57,5 @@ export type BaseModalProps = {
 export type PageHeadingProps = {
   title: string;
   alignment?: string;
+  mobileAlignment?: string;
 };

@@ -1,24 +1,20 @@
-import { push } from "connected-react-router";
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { error } from "../../app/features/errorApi";
-import { currentUser } from "../../app/features/userApi";
 import { Breadcrumb, RegisterForm } from "../../components/";
-import { useTitle } from "../../hooks";
+import { useError, useRedirect, useTitle, useUser } from "../../hooks";
 import "./RegisterPage.scoped.scss";
 
 export default function RegisterPage() {
-  const errorState = useSelector(error);
-  const user = useSelector(currentUser);
-  const dispatcher = useDispatch();
+  const { error } = useError();
+  const { user, loggedIn } = useUser();
+  const { redirect } = useRedirect();
   useTitle("Regisztráció");
 
   useEffect(() => {
-    if (user.neptunaCode !== "") {
-      dispatcher(push("/profilom"));
+    if (loggedIn) {
+      redirect("/profilom");
     }
-  }, [dispatcher, user]);
+  }, []);
 
   return (
     <>
