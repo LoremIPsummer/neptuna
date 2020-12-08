@@ -18,3 +18,4 @@ export { default as ThemeSwitcher } from "./ThemeSwitcher/ThemeSwitcher";
 export { default as UpScroller } from "./UpScroller/UpScroller";
 export { default as BaseModal } from "./BaseModal/BaseModal";
 export { default as PageHeading } from "./PageHeading/PageHeading";
+export { default as TopInfo } from "./TopInfo/TopInfo";

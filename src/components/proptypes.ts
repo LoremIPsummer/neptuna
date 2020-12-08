@@ -59,3 +59,7 @@ export type PageHeadingProps = {
   alignment?: string;
   mobileAlignment?: string;
 };
+
+export type TopInfoProps = {
+  user: UserModel;
+};

@@ -9,18 +9,18 @@ import {
   UpScroller,
   PageContainer,
   AuthGuard,
+  TopInfo,
 } from "./components";
 import { ToastContainer } from "react-toastify";
 import { Theme, ThemeContext } from "./context/ThemeContext";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./app/store";
 import useErrorBoundary from "use-error-boundary";
-import { useLoading } from "./hooks";
-import { useDispatch } from "react-redux";
-import { getSubjectsAsync } from "./app/features/subjectApi";
+import { useLoading, useUser } from "./hooks";
 
 function App() {
   const { isLoading } = useLoading();
+  const { loggedIn, user } = useUser();
 
   const [theme, setTheme] = useState(
     window.matchMedia &&
@@ -37,9 +37,10 @@ function App() {
         {isLoading && <Spinner />}
         <ToastContainer />
         <ConnectedRouter history={history}>
+          {loggedIn && <TopInfo user={user} />}
           <Header />
           <PageContainer>
-            <Suspense fallback={null}>
+            <Suspense fallback={<Spinner />}>
               <Switch>
                 <ErrorBoundary>
                   <Route

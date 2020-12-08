@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { BaseModal, Hamburger } from "../index";
+import { Hamburger } from "../index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSignInAlt,

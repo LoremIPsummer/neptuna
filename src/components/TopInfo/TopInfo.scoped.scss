@@ -1,0 +1,34 @@
+.neptuna-userdata-holder {
+  @include respond-below(md) {
+    display: none !important;
+  }
+  @include themify($themes) {
+    color: themed("text-color");
+    background-color: themed("page-bg-color");
+  }
+}
+
+.user-info {
+  @include vertical-center-items(row);
+  width: 100%;
+  height: 100%;
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+  list-style-type: none;
+
+  li:first-of-type {
+    margin-left: 0;
+  }
+
+  li:last-of-type {
+    margin-left: auto;
+    margin-right: $spacer;
+  }
+
+  li {
+    margin-left: $spacer;
+  }
+  svg {
+    margin-right: 0.3rem;
+  }
+}
