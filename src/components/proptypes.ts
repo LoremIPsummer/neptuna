@@ -48,7 +48,7 @@ export type SubjectTableProps = {
 export type BaseModalProps = {
   data: {
     title: string;
-    body: string;
+    body: string | JSX.Element;
     OkMethod?: () => void;
     OkText?: string;
     CancelMethod?: () => void;

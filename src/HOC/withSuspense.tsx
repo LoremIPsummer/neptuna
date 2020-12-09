@@ -1,18 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Spinner from "../components/Spinner/Spinner";
 
-export const withSuspense = (
-  WrappedComponent: any,
-  FallbackComponent: JSX.Element | null = null,
-  props: any = null
-) => {
+export const withSuspense = (children: ReactNode) => {
   return function() {
-    if (!FallbackComponent) FallbackComponent = <Spinner />;
-    return (
-      <React.Suspense fallback={FallbackComponent}>
-        <WrappedComponent props />
-      </React.Suspense>
-    );
+    return <React.Suspense fallback={<Spinner />}>{children}</React.Suspense>;
   };
 };
 
