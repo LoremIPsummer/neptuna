@@ -17,8 +17,9 @@ import {
   isLoginSucceed,
 } from "../../services/typeguards";
 import { Cookies } from "react-cookie";
-import { setLoadState } from "./loadApi";
+import { Meta, setLoadState } from "./loadApi";
 import { setErrorState } from "./errorApi";
+import { push } from "connected-react-router";
 
 const cookieManager = new Cookies();
 
@@ -55,12 +56,12 @@ export const loginUserAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("users/login", async (loginModel, thunkApi) => {
-  thunkApi.dispatch(setLoadState(true));
-
+  thunkApi.dispatch(setLoadState(true, Meta.UserLogin));
   return await loginUserAsyncPost(loginModel).then((resp) => {
-    thunkApi.dispatch(setLoadState(false));
+    thunkApi.dispatch(setLoadState(false, Meta.UserLogin));
     if (isLoginSucceed(resp)) {
       thunkApi.dispatch(setErrorState({ error: "", statusCode: 201 }));
+      thunkApi.dispatch(push("/profilom"));
       return resp;
     } else {
       thunkApi.dispatch(
@@ -79,9 +80,9 @@ export const getUserDataAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("users/get/current", async (_, thunkApi) => {
-  thunkApi.dispatch(setLoadState(true));
+  thunkApi.dispatch(setLoadState(true, Meta.UserDataFetch));
   return await userDataAsyncGet().then((resp) => {
-    thunkApi.dispatch(setLoadState(false));
+    thunkApi.dispatch(setLoadState(false, Meta.UserDataFetch));
     if (isCurrentUserRetrieved(resp)) {
       thunkApi.dispatch(setErrorState({ error: "", statusCode: 200 }));
       return resp;

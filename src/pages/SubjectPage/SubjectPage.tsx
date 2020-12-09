@@ -6,10 +6,6 @@ export default function SubjectPage() {
   const { sync } = useSubjects();
   useTitle("Tantárgyak");
 
-  useEffect(() => {
-    sync();
-  }, []);
-
   return (
     <>
       <Breadcrumb

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Meta, setLoadState } from "../app/features/loadApi";
 import { subjects, getSubjectsAsync } from "../app/features/subjectApi";
 
 export const useSubjects = () => {
@@ -6,7 +7,9 @@ export const useSubjects = () => {
 
   return {
     subjects: useSelector(subjects),
-    sync: () => dispatcher(getSubjectsAsync({})),
+    sync: () => {
+      dispatcher(getSubjectsAsync({}));
+    },
   };
 };
 

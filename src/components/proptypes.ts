@@ -7,6 +7,10 @@ export type AuthGuardProps = {
   children: ReactNode;
 };
 
+export type SubjectAreaProps = {
+  children: ReactNode;
+};
+
 export type BreadcrumbProps = {
   paths: Array<{ pathName: string; pathUrl: string }>;
 };

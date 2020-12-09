@@ -14,8 +14,12 @@ export const useUser = () => {
   return {
     user: useSelector(currentUser),
     loggedIn: useSelector(loggedIn),
-    sync: () => dispatcher(getUserDataAsync({})),
-    login: (value: LoginRequest) => dispatcher(loginUserAsync(value)),
+    sync: () => {
+      dispatcher(getUserDataAsync({}));
+    },
+    login: (value: LoginRequest) => {
+      dispatcher(loginUserAsync(value));
+    },
     logout: () => dispatcher(logoutUser()),
   };
 };

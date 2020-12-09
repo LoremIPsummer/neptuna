@@ -6,10 +6,10 @@ import {
   GetSubjectsRequest,
   GetSubjectsResponse,
 } from "../../services/axios-wrappers";
-import { setLoadState } from "./loadApi";
 import { listSubjectsAsyncGet } from "../../services/subjectService";
 import { isSubjectGetSuccess } from "../../services/typeguards";
 import { setErrorState } from "./errorApi";
+import { Meta, setLoadState } from "./loadApi";
 
 interface SubjectState {
   loadedSubjects: SubjectModel[];
@@ -26,16 +26,19 @@ export const getSubjectsAsync = createAsyncThunk<
     rejectValue: ApiError;
   }
 >("subjects", async (req, thunkApi) => {
-  const resp = await listSubjectsAsyncGet(req);
-  if (!isSubjectGetSuccess(resp)) {
-    thunkApi.dispatch(
-      setErrorState({ error: resp.error, statusCode: resp.statusCode })
-    );
-    return thunkApi.rejectWithValue(resp);
-  } else {
-    thunkApi.dispatch(setErrorState({ error: "", statusCode: 200 }));
-    return resp;
-  }
+  thunkApi.dispatch(setLoadState(true, Meta.SubjectsFetch));
+  return await listSubjectsAsyncGet(req).then((data) => {
+    thunkApi.dispatch(setLoadState(false, Meta.SubjectsFetch));
+    if (!isSubjectGetSuccess(data)) {
+      thunkApi.dispatch(
+        setErrorState({ error: data.error, statusCode: data.statusCode })
+      );
+      return thunkApi.rejectWithValue(data);
+    } else {
+      thunkApi.dispatch(setErrorState({ error: "", statusCode: 200 }));
+      return data;
+    }
+  });
 });
 
 export const subjectApiSlice = createSlice({

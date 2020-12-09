@@ -6,13 +6,14 @@ import { toast } from "react-toastify";
 import { useLoading } from "../../hooks";
 import { isConfirmMailError } from "../../services/typeguards";
 import { ErrorDialogProps } from "../proptypes";
+import { Meta } from "../../app/features/loadApi";
 
 export default function ErrorDialog({ error }: ErrorDialogProps) {
 
   const {setLoading} = useLoading();
 
   const processLink = async (moreInfoType: string, moreInfoData? : string) => {
-    setLoading(true);
+    setLoading(true, Meta.ResendEmail);
     switch (moreInfoType) {
       case "email":{
         const response = await resendConfirmAsyncPost(moreInfoData as string);
@@ -21,7 +22,7 @@ export default function ErrorDialog({ error }: ErrorDialogProps) {
         break;
       }
     }
-    setLoading(false);
+    setLoading(false, Meta.ResendEmail);
   }
   return (
     <>

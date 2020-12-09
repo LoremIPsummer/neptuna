@@ -7,7 +7,7 @@ import {
   RegisterResponse,
   UserDataResponse,
 } from "./axios-wrappers";
-import globalAxios, {errorHandler} from "./axiosConfig";
+import globalAxios, { errorHandler } from "./axiosConfig";
 
 // POST
 // /users/register
@@ -16,14 +16,12 @@ import globalAxios, {errorHandler} from "./axiosConfig";
 export const registerUserAsyncPost = async (
   req: RegisterRequest
 ): Promise<RegisterResponse | ApiError> => {
-  try{ 
+  try {
     return (await globalAxios.post<RegisterResponse>(`/users/register`, req))
-    .data;
-  }
-  catch(err){
+      .data;
+  } catch (err) {
     return errorHandler(err);
   }
- 
 };
 
 // POST
@@ -32,13 +30,14 @@ export const registerUserAsyncPost = async (
 
 export const loginUserAsyncPost = async (
   req: LoginRequest
-): Promise<LoginResponse | ApiError> => {
-  try{
-    return (await globalAxios.post<LoginResponse>(`/users/login`, req)).data; 
-}
-catch(err){
-  return errorHandler(err);
-}
+): Promise<ApiError | LoginResponse> => {
+  try {
+    const resp = await globalAxios.post<LoginResponse>(`/users/login`, req);
+    const { result, token } = resp.data;
+    return { result, token };
+  } catch (err) {
+    return errorHandler(err);
+  }
 };
 
 // GET
@@ -48,13 +47,12 @@ catch(err){
 export const userDataAsyncGet = async (): Promise<
   UserDataResponse | ApiError
 > => {
-  try{
-    return (await globalAxios.get<UserDataResponse>(`/users`)).data;
-  }
-  catch(err){
+  try {
+    const resp = await globalAxios.get<UserDataResponse>(`/users`);
+    return resp.data;
+  } catch (err) {
     return errorHandler(err);
   }
- 
 };
 
 // POST
@@ -64,20 +62,18 @@ export const userDataAsyncGet = async (): Promise<
 export const resendConfirmAsyncPost = async (
   neptunaCode: string
 ): Promise<boolean | ApiError> => {
-  try{
+  try {
     return await globalAxios
-    .post<boolean>(
-      `/users/resendconfirm`,
-      JSON.parse(`{"neptunacode": "${neptunaCode}"}`)
-    )
-    .then((resp) => {
-      return resp.status === 200;
-    });
-  }
-  catch(err){
+      .post<boolean>(
+        `/users/resendconfirm`,
+        JSON.parse(`{"neptunacode": "${neptunaCode}"}`)
+      )
+      .then((resp) => {
+        return resp.status === 200;
+      });
+  } catch (err) {
     return errorHandler(err);
   }
- 
 };
 
 // GET
@@ -88,17 +84,15 @@ export const verifyAccountAsyncGet = async (
   neptunaCode: string,
   token: string
 ): Promise<boolean | ApiError> => {
-  try{
+  try {
     return await globalAxios
-    .get<boolean>(
-      `/users/accountconfirm?neptunacode=${neptunaCode}&token=${token}`
-    )
-    .then((resp) => {
-      return resp.status === 200;
-    });
-  }
-  catch(err){
+      .get<boolean>(
+        `/users/accountconfirm?neptunacode=${neptunaCode}&token=${token}`
+      )
+      .then((resp) => {
+        return resp.status === 200;
+      });
+  } catch (err) {
     return errorHandler(err);
   }
-
 };

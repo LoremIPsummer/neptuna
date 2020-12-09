@@ -10,6 +10,7 @@ import {
   PageContainer,
   AuthGuard,
   TopInfo,
+  SubjectArea,
 } from "./components";
 import { ToastContainer } from "react-toastify";
 import { Theme, ThemeContext } from "./context/ThemeContext";
@@ -78,13 +79,15 @@ function App() {
                         import("./pages/ProfilePage/ProfilePage")
                       )}
                     />
-                    <Route
-                      path="/targyak"
-                      exact
-                      component={lazy(() =>
-                        import("./pages/SubjectPage/SubjectPage")
-                      )}
-                    />
+                    <SubjectArea>
+                      <Route
+                        path="/targyak"
+                        exact
+                        component={lazy(() =>
+                          import("./pages/SubjectPage/SubjectPage")
+                        )}
+                      />
+                    </SubjectArea>
                   </AuthGuard>
                 </ErrorBoundary>
               </Switch>

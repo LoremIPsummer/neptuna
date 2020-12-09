@@ -13,30 +13,26 @@ interface VerifyPageParams {
 }
 
 export default function VerifyPage() {
-  const { setLoading } = useLoading();
   useTitle("Megerősítés");
 
-  let { neptunacode, token } = useParams<VerifyPageParams>();
-  const [result, setResult] = useState<boolean | ApiError>({
-    error: "",
-    statusCode: -1,
-  });
-  const shouldRedirect = useRef(false);
+  const { neptunacode, token } = useParams<VerifyPageParams>();
+  const [finished, setFinished] = useState(false);
+
+  console.log(neptunacode);
+  console.log(token);
 
   useEffect(() => {
     async function isSucceded(neptunaCode: string, token: string) {
-      setLoading(true);
       await verifyAccountAsyncGet(neptunaCode, token).then((resp) => {
-        setLoading(false);
-        if (!isUserVerifiedError(resp))
+        if (!isUserVerifiedError(resp)) {
           showToast(ToastOptions.SUCCESS, "Sikeres megerősítés");
-        shouldRedirect.current = true;
-        setResult(resp);
+        } else {
+        }
+        setFinished(true);
       });
-      console.log(result);
     }
     isSucceded(neptunacode, token);
   }, []);
 
-  return <>{shouldRedirect.current ? <Redirect to="/" push /> : <></>}</>;
+  return <></>;
 }

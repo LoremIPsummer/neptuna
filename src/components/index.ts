@@ -1,4 +1,5 @@
 export { default as AuthGuard } from "./AuthGuard/AuthGuard";
+export { default as SubjectArea } from "./SubjectArea/SubjectArea";
 export { default as Breadcrumb } from "./Breadcrumb/Breadcrumb";
 export { default as CookieNotice } from "./CookieNotice/CookieNotice";
 export { default as ErrorDialog } from "./ErrorDialog/ErrorDialog";

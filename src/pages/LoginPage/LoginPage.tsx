@@ -29,9 +29,7 @@ export default function LoginPage() {
             <legend>Bejelentkezés</legend>
             <LoginForm
               login={(model: LoginRequest) => {
-                Promise.resolve(login(model)).then(() => {
-                  redirect("/profilom");
-                });
+                login(model);
               }}
             />
             <ErrorDialog error={error} />

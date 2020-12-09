@@ -3,9 +3,8 @@ import { Cookies } from "react-cookie";
 import { ApiError } from './axios-wrappers';
 import showToast, { ToastOptions } from './toastrConfig';
 const cookieManager = new Cookies();
-const globalAxios = axios.create();
+const globalAxios = axios.create({baseURL: process.env.REACT_APP_BACKEND_URL});
 
-globalAxios.defaults.baseURL = process.env.BACKEND_URL;
 globalAxios.defaults.headers.common['Content-Type'] = 'application/json';
 
 globalAxios.interceptors.request.use(
