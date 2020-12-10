@@ -30,12 +30,6 @@ export const error = (state: RootState) => {
   return state.error.error;
 };
 
-export const setErrorState = (value: ApiError): AppThunk => async (
-  dispatch
-) => {
-  dispatch(setError(value));
-};
-
 export const { setError } = errorApiSlice.actions;
 
 export default errorApiSlice.reducer;

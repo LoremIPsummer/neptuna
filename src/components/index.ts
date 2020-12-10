@@ -20,3 +20,7 @@ export { default as UpScroller } from "./UpScroller/UpScroller";
 export { default as BaseModal } from "./BaseModal/BaseModal";
 export { default as PageHeading } from "./PageHeading/PageHeading";
 export { default as TopInfo } from "./TopInfo/TopInfo";
+export {
+  default as SubjectModalBody,
+} from "./SubjectModalBody/SubjectModalBody";
+export { default as Paginator } from "./Paginator/Paginator";

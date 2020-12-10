@@ -42,8 +42,8 @@ function App() {
           <Header />
           <PageContainer>
             <Suspense fallback={<Spinner />}>
-              <Switch>
-                <ErrorBoundary>
+              <ErrorBoundary>
+                <Switch>
                   <Route
                     path="/"
                     exact
@@ -87,10 +87,23 @@ function App() {
                           import("./pages/SubjectPage/SubjectPage")
                         )}
                       />
+                      <Route
+                        path="/felvett-targyak"
+                        exact
+                        component={lazy(() =>
+                          import("./pages/AppliedSubjectPage/AppliedSubjectPage")
+                        )}
+                      />
                     </SubjectArea>
+                    <Route
+                      path="*"
+                      component={lazy(() =>
+                        import("./pages/NotFoundPage/NotFoundPage")
+                      )}
+                    />
                   </AuthGuard>
-                </ErrorBoundary>
-              </Switch>
+                </Switch>
+              </ErrorBoundary>
             </Suspense>
           </PageContainer>
           <CookieNotice />

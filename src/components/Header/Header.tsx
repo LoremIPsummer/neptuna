@@ -43,33 +43,14 @@ export default function Header() {
                 <Link to="/targyak">Tárgyak</Link>
                 <Navbar as="ul">
                   <Nav.Item as="li">
-                    <Link to="/orarend">Órarend</Link>
-                  </Nav.Item>
-                  <Nav.Item as="li">
-                    <Link to="/targyaim">Felvett tárgyaim</Link>
+                    <Link to="/felvett-targyak">Felvett tárgyaim</Link>
                   </Nav.Item>
                   <Nav.Item as="li">
                     <Link to="/targyfelvetel">Tárgyfelvétel</Link>
                   </Nav.Item>
-                  <Nav.Item as="li">
-                    <Link to="/targyleadas">Tárgyleadás</Link>
-                  </Nav.Item>
                 </Navbar>
               </Nav.Item>
-              <Nav.Item as="li" className="has-sub">
-                <Link to="">Ügyintézés</Link>
-                <Navbar as="ul">
-                  <Nav.Item as="li">
-                    <Link to="/kervenyek">Kérvények</Link>
-                  </Nav.Item>
-                  <Nav.Item as="li">
-                    <Link to="/bkervenyek">Beküldött kérvényeim</Link>
-                  </Nav.Item>
-                  <Nav.Item as="li">
-                    <Link to="/dokumentumok">Dokumentumok</Link>
-                  </Nav.Item>
-                </Navbar>
-              </Nav.Item>
+
               <Nav.Item as="li">
                 <Link to="/statisztika">Statisztika</Link>
               </Nav.Item>

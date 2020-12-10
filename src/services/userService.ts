@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import {
   ApiError,
   LoginRequest,
@@ -17,22 +16,21 @@ export const registerUserAsyncPost = async (
   req: RegisterRequest
 ): Promise<RegisterResponse | ApiError> => {
   try {
-    return (await globalAxios.post<RegisterResponse>(`/users/register`, req))
-      .data;
+    return (await globalAxios.post<RegisterResponse>(`/users`, req)).data;
   } catch (err) {
     return errorHandler(err);
   }
 };
 
 // POST
-// /users/login
+// /users/auth
 // return the jwt
 
 export const loginUserAsyncPost = async (
   req: LoginRequest
 ): Promise<ApiError | LoginResponse> => {
   try {
-    const resp = await globalAxios.post<LoginResponse>(`/users/login`, req);
+    const resp = await globalAxios.post<LoginResponse>(`/users/auth`, req);
     const { result, token } = resp.data;
     return { result, token };
   } catch (err) {
@@ -41,14 +39,14 @@ export const loginUserAsyncPost = async (
 };
 
 // GET
-// /users
+// /users/current
 // return the current user based on the token
 
 export const userDataAsyncGet = async (): Promise<
   UserDataResponse | ApiError
 > => {
   try {
-    const resp = await globalAxios.get<UserDataResponse>(`/users`);
+    const resp = await globalAxios.get<UserDataResponse>(`/users/current`);
     return resp.data;
   } catch (err) {
     return errorHandler(err);

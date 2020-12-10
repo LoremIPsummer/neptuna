@@ -1,4 +1,9 @@
 .neptuna-footer {
+  @font-face {
+    font-family: MenuFont;
+    src: url("../../fonts/Aquire.otf") format("opentype");
+  }
+
   margin-top: auto !important;
   @include vertical-center-items(row);
   padding: 1rem;
@@ -22,5 +27,9 @@
     .copyright {
       text-align: center !important;
     }
+  }
+
+  .neptuna-logo {
+    font-family: "MenuFont";
   }
 }

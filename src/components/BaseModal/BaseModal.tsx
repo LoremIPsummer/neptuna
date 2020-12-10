@@ -3,7 +3,6 @@ import { Button, Modal } from "react-bootstrap";
 import { Theme } from "../../context/ThemeContext";
 import { useTheme } from "../../hooks/useTheme";
 import { BaseModalProps } from "../proptypes";
-import "./BaseModal.scoped.scss";
 
 export function BaseModal({ data, closeModal, isShown }: BaseModalProps) {
   const { theme } = useTheme();

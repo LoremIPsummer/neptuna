@@ -8,3 +8,16 @@ th,
 td {
   text-align: center;
 }
+
+.applied {
+  @include themify($themes) {
+    color: themed("border-color");
+    -webkit-text-stroke: 1px themed("text-color");
+  }
+}
+
+.striped {
+  @include themify($themes) {
+    background-color: themed("applied-table-color");
+  }
+}

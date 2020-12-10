@@ -108,21 +108,10 @@ input[type="email"],
   }
 }
 
-// data table overrides
-
-.react-bootstrap-table {
-  tbody,
-  thead {
+.pagination {
+  li.page-link {
     @include themify($themes) {
-      background-color: themed("page-bg-color") !important;
-      color: themed("text-color") !important;
+      background-color: themed("black") !important;
     }
-  }
-}
-
-.page-item {
-  @include themify($themes) {
-    background-color: themed("page-bg-color") !important;
-    color: themed("text-color") !important;
   }
 }

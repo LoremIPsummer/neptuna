@@ -12,7 +12,8 @@ export default function Footer() {
     <>
       <Row noGutters={true} className="neptuna-footer noselect">
         <Col className="lead describe" xs={12} md={6}>
-          NEPTUNA, a nyílt forráskódú tanulmányi rendszer.
+          <span className="neptuna-logo">NEPTUNA</span> | a nyílt forráskódú
+          tanulmányi rendszer.
         </Col>
         <Col className="lead copyright" xs={12} md={6}>
           Made with <FontAwesomeIcon icon={faHeart} /> by K.M |{" "}

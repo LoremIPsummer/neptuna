@@ -6,6 +6,8 @@ export enum Meta {
   UserDataFetch = "User Data Fetch",
   SubjectsFetch = "Subjects Fetch",
   ResendEmail = "Resend email sending",
+  SubjectApply = "Applying for a subject",
+  TerminateSubject = "Remove subject from user",
 }
 
 interface LoadState {

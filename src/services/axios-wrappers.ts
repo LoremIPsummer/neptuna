@@ -4,6 +4,7 @@ import { UserModel } from "../models/user";
 export interface BaseResponse {
   result: string;
 }
+export interface BaseRequest {}
 
 export interface LoginResponse extends BaseResponse {
   token: string;
@@ -49,3 +50,9 @@ export interface GetSubjectsRequest {
 export interface GetSubjectsResponse extends BaseResponse {
   subjects: SubjectModel[];
 }
+
+export interface ApplySubjectRequest {
+  subjectId: string;
+}
+
+export interface TerminateSubjectRequest extends ApplySubjectRequest {}

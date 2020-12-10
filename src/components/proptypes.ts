@@ -45,6 +45,13 @@ export type SubjectTableProps = {
   }>;
 };
 
+export type PaginatorProps = {
+  next: () => void;
+  previous: () => void;
+  pagenum: number;
+  className?: string;
+};
+
 export type BaseModalProps = {
   data: {
     title: string;
@@ -66,4 +73,8 @@ export type PageHeadingProps = {
 
 export type TopInfoProps = {
   user: UserModel;
+};
+
+export type SubjectModalBodyProps = {
+  model: SubjectModel;
 };

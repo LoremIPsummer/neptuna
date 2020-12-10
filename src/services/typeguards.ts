@@ -6,6 +6,12 @@ import {
   UserDataResponse,
 } from "./axios-wrappers";
 
+export function isResponseSucceed(
+  response: BaseResponse | ApiError
+): response is BaseResponse {
+  return (response as BaseResponse).result !== undefined;
+}
+
 export function isLoginSucceed(
   response: LoginResponse | ApiError
 ): response is LoginResponse {
