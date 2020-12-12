@@ -1,0 +1,27 @@
+@font-face {
+  font-family: MenuFont;
+  src: url("../../fonts/Aquire.otf") format("opentype");
+}
+.neptuna-404 {
+  font-family: "MenuFont";
+  font-size: 13rem;
+}
+
+.return {
+  text-decoration: none;
+  margin-top: 2rem;
+  display: inline-block;
+}
+
+.wrapper {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  text-align: center;
+}
+
+.return,
+.wrapper {
+  @include themify($themes) {
+    color: themed("text-color");
+  }
+}

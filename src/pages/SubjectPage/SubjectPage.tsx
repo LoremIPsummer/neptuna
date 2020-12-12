@@ -11,18 +11,11 @@ export default function SubjectPage() {
   const tableModel = convertSubjects(subjects);
 
   const [pageNumber, setPageNumber] = useState(1);
-  const [subjectNumber] = useState(15);
+  const [subjectNumber] = useState(10);
 
   const currentPageNumber = pageNumber * subjectNumber - subjectNumber;
+  const pageNum = tableModel.length / subjectNumber;
   const paginatedSubjects = tableModel.splice(currentPageNumber, subjectNumber);
-
-  const handlePrev = () => {
-    if (pageNumber === 1) return;
-    setPageNumber(pageNumber - 1);
-  };
-  const handleNext = () => {
-    setPageNumber(pageNumber + 1);
-  };
 
   const Table = React.lazy(() =>
     import("../../components/SubjectTable/SubjectTable")
@@ -56,12 +49,11 @@ export default function SubjectPage() {
           <Col xs={12}>
             <Table models={paginatedSubjects} />
           </Col>
-          <Col xs={12}>
+          <Col xs={12} className="align-items-right">
             <Paginator
-              className="neptuna-paginator"
-              next={handleNext}
-              previous={handlePrev}
-              pagenum={pageNumber}
+              setPage={(num: number) => setPageNumber(num)}
+              pageNum={pageNum}
+              actualPageNum={pageNumber}
             />
           </Col>
         </Row>

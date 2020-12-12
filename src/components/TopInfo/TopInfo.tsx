@@ -22,6 +22,8 @@ export default function TopInfo({ user }: TopInfoProps) {
           <FontAwesomeIcon icon={faAddressCard} size="sm" />
           Neptuna kód: {user.neptunaCode}
         </li>
+        <li>Beosztás: {user.role}</li>
+
         <li>
           <FontAwesomeIcon icon={faClock} size="sm" />
           Utolsó belépési idő:{" "}

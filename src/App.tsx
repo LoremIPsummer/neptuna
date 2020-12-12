@@ -72,36 +72,52 @@ function App() {
                     )}
                   />
                   <AuthGuard>
-                    <Route
-                      path="/profilom"
-                      exact
-                      component={lazy(() =>
-                        import("./pages/ProfilePage/ProfilePage")
-                      )}
-                    />
-                    <SubjectArea>
+                    <Switch>
                       <Route
-                        path="/targyak"
+                        path="/profilom"
                         exact
                         component={lazy(() =>
-                          import("./pages/SubjectPage/SubjectPage")
+                          import("./pages/ProfilePage/ProfilePage")
                         )}
                       />
+                      <SubjectArea>
+                        <Switch>
+                          <Route
+                            path="/targyak"
+                            exact
+                            component={lazy(() =>
+                              import("./pages/SubjectPage/SubjectPage")
+                            )}
+                          />
+                          <Route
+                            path="/felvett-targyak"
+                            exact
+                            component={lazy(() =>
+                              import("./pages/AppliedSubjectPage/AppliedSubjectPage")
+                            )}
+                          />
+                          <Route
+                            path="*"
+                            component={lazy(() =>
+                              import("./pages/NotFoundPage/NotFoundPage")
+                            )}
+                          />
+                        </Switch>
+                      </SubjectArea>
                       <Route
-                        path="/felvett-targyak"
-                        exact
+                        path="*"
                         component={lazy(() =>
-                          import("./pages/AppliedSubjectPage/AppliedSubjectPage")
+                          import("./pages/NotFoundPage/NotFoundPage")
                         )}
                       />
-                    </SubjectArea>
-                    <Route
-                      path="*"
-                      component={lazy(() =>
-                        import("./pages/NotFoundPage/NotFoundPage")
-                      )}
-                    />
+                    </Switch>
                   </AuthGuard>
+                  <Route
+                    path="*"
+                    component={lazy(() =>
+                      import("./pages/NotFoundPage/NotFoundPage")
+                    )}
+                  />
                 </Switch>
               </ErrorBoundary>
             </Suspense>
