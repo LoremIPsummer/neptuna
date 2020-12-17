@@ -3,6 +3,7 @@ import { useSubjects, useTitle } from "../../hooks";
 import { Breadcrumb, PageHeading } from "../../components";
 import { convertSubjects } from "../../util/subjects-table";
 import { Col, Row, Spinner } from "react-bootstrap";
+import { usePagination } from "../../hooks/usePagination";
 
 export default function SubjectPage() {
   useTitle("Tantárgyak");
@@ -10,19 +11,10 @@ export default function SubjectPage() {
   const { subjects } = useSubjects();
   const tableModel = convertSubjects(subjects);
 
-  const [pageNumber, setPageNumber] = useState(1);
-  const [subjectNumber] = useState(10);
-
-  const currentPageNumber = pageNumber * subjectNumber - subjectNumber;
-  const pageNum = tableModel.length / subjectNumber;
-  const paginatedSubjects = tableModel.splice(currentPageNumber, subjectNumber);
+  const { items, PaginatorComponent } = usePagination(tableModel);
 
   const Table = React.lazy(() =>
     import("../../components/SubjectTable/SubjectTable")
-  );
-
-  const Paginator = React.lazy(() =>
-    import("../../components/Paginator/Paginator")
   );
 
   return (
@@ -47,14 +39,10 @@ export default function SubjectPage() {
       >
         <Row>
           <Col xs={12}>
-            <Table models={paginatedSubjects} />
+            <Table models={items} />
           </Col>
           <Col xs={12} className="align-items-right">
-            <Paginator
-              setPage={(num: number) => setPageNumber(num)}
-              pageNum={pageNum}
-              actualPageNum={pageNumber}
-            />
+            <PaginatorComponent />
           </Col>
         </Row>
       </React.Suspense>

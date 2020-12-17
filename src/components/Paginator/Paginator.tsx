@@ -9,6 +9,8 @@ import "./Paginator.scoped.scss";
 
 export default function Paginator({
   setPage,
+  next,
+  previous,
   actualPageNum,
   pageNum,
 }: PaginatorProps) {
@@ -17,11 +19,7 @@ export default function Paginator({
     <>
       <div className="pagination noselect">
         <ul>
-          <li
-            onClick={() =>
-              actualPageNum !== 1 ? setPage(actualPageNum - 1) : {}
-            }
-          >
+          <li onClick={() => previous()}>
             <FontAwesomeIcon icon={faChevronLeft} size="lg" />
           </li>
           {Array.from(Array(rounded).keys()).map((i) => (
@@ -33,11 +31,7 @@ export default function Paginator({
               {i + 1}
             </li>
           ))}
-          <li
-            onClick={() =>
-              actualPageNum < pageNum ? setPage(actualPageNum + 1) : {}
-            }
-          >
+          <li onClick={() => next()}>
             <FontAwesomeIcon icon={faChevronRight} size="lg" />
           </li>
           <small className="muted d-inline-block">

@@ -47,6 +47,8 @@ export type SubjectTableProps = {
 
 export type PaginatorProps = {
   setPage: (num: number) => void;
+  next: () => void;
+  previous: () => void;
   actualPageNum: number;
   pageNum: number;
 };
