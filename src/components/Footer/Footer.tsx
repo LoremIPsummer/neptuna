@@ -1,11 +1,9 @@
 import React from "react";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
+import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import "./Footer.scoped.scss";
-import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
-import CookieNotice from "../CookieNotice/CookieNotice";
+import { ThemeSwitcher } from "../index";
 
 export default function Footer() {
   return (

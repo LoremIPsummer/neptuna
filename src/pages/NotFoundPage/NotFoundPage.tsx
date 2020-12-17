@@ -1,9 +1,11 @@
 import React from "react";
 import { Col, Row, Image, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useTitle } from "../../hooks";
 import "./NotFoundPage.scoped.scss";
 
 export default function NotFoundPage() {
+  useTitle("A keresett oldal nem található");
   return (
     <>
       <Row noGutters className="wrapper">
