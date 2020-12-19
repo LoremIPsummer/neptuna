@@ -3,6 +3,7 @@ import { useSubjects, useTitle, useUser } from "../../hooks";
 import { Breadcrumb, PageHeading } from "../../components";
 import { convertSubjects } from "../../util/subjects-table";
 import { Spinner } from "react-bootstrap";
+import { usePagination } from "../../hooks/usePagination";
 
 export default function AppliedSubjectPage() {
   useTitle("Felvett tantárgyak");
@@ -13,6 +14,7 @@ export default function AppliedSubjectPage() {
       user.subjects.find((usub) => usub.subjectCode === s.subjectCode)
     )
   );
+  const { PaginatorComponent, items } = usePagination(tableModel);
 
   const Table = React.lazy(() =>
     import("../../components/SubjectTable/SubjectTable")
@@ -38,8 +40,9 @@ export default function AppliedSubjectPage() {
           </Spinner>
         }
       >
-        <Table models={tableModel} />
+        <Table models={items} />
       </React.Suspense>
+      <PaginatorComponent />
     </>
   );
 }

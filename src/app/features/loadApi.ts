@@ -8,6 +8,7 @@ export enum Meta {
   ResendEmail = "Resend email sending",
   SubjectApply = "Applying for a subject",
   TerminateSubject = "Remove subject from user",
+  UserRegister = "User Register",
 }
 
 interface LoadState {

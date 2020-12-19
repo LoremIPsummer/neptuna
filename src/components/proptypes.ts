@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 import { SubjectModel } from "../models/subject";
 import { UserModel } from "../models/user";
-import { ApiError, LoginRequest } from "../services/axios-wrappers";
+import {
+  ApiError,
+  LoginRequest,
+  RegisterRequest,
+} from "../services/axios-wrappers";
 
 export type AuthGuardProps = {
   children: ReactNode;
@@ -74,6 +78,10 @@ export type PageHeadingProps = {
 
 export type TopInfoProps = {
   user: UserModel;
+};
+
+export type RegisterFormProps = {
+  register: () => void;
 };
 
 export type SubjectModalBodyProps = {

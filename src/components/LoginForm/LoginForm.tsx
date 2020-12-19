@@ -1,7 +1,7 @@
 import { faKey, faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FormEvent, useReducer, useState } from "react";
-import { Form, InputGroup, Row , Button, Col} from "react-bootstrap";
+import { Form, InputGroup, Row , Button, Col, Card} from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import {
   initialState,

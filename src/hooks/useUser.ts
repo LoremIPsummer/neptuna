@@ -5,8 +5,9 @@ import {
   getUserDataAsync,
   logoutUser,
   loggedIn,
+  registerUserAsync,
 } from "../app/features/userApi";
-import { LoginRequest } from "../services/axios-wrappers";
+import { LoginRequest, RegisterRequest } from "../services/axios-wrappers";
 
 export const useUser = () => {
   const dispatcher = useDispatch();
@@ -19,6 +20,9 @@ export const useUser = () => {
     },
     login: (value: LoginRequest) => {
       dispatcher(loginUserAsync(value));
+    },
+    register: (value: RegisterRequest) => {
+      dispatcher(registerUserAsync(value));
     },
     logout: () => dispatcher(logoutUser()),
   };

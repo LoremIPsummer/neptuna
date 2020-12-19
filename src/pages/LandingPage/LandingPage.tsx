@@ -69,24 +69,24 @@ export default function LandingPage() {
         </Row>
       </div>
       <Row noGutters={true} className="neptuna-features">
-        <Col xs={12} lg={3} className="card">
+        <Col xs={12} lg={3} className="feature-card">
           <h3>
             <a href="#"> Intézményi jelentkezés </a>
           </h3>
           <FontAwesomeIcon icon={faUniversity} size={"5x"} />
         </Col>
-        <Col xs={12} lg={3} className="card">
+        <Col xs={12} lg={3} className="feature-card">
           <h3>
             <a href="mailto:kissmate@goodiesoft.hu">Kapcsolat</a>
           </h3>
           <FontAwesomeIcon icon={faEnvelope} size={"5x"} />
         </Col>
-        <Col xs={12} lg={3} className="card">
+        <Col xs={12} lg={3} className="feature-card">
           <h3>Demo kezelőfelület</h3>
           <FontAwesomeIcon icon={faCogs} size={"5x"} />
         </Col>
 
-        <Col xs={12} lg={3} className="card">
+        <Col xs={12} lg={3} className="feature-card">
           <h3>Dokumentáció</h3>
           <FontAwesomeIcon icon={faBook} size={"5x"} />
         </Col>

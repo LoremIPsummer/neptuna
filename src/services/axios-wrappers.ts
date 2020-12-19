@@ -26,6 +26,7 @@ export interface RegisterRequest {
   email: string;
   recaptcha: string;
   password: string;
+  name: string;
 }
 
 export interface ApiError {

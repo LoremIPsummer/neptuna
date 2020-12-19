@@ -3,18 +3,22 @@ import { RootState } from "../store";
 import { UserModel } from "../../models/user";
 import {
   loginUserAsyncPost,
+  registerUserAsyncPost,
   userDataAsyncGet,
 } from "../../services/userService";
 import {
   ApiError,
   LoginRequest,
   LoginResponse,
+  RegisterRequest,
+  RegisterResponse,
   UserDataRequest,
   UserDataResponse,
 } from "../../services/axios-wrappers";
 import {
   isCurrentUserRetrieved,
   isLoginSucceed,
+  isRegisterSucceed,
 } from "../../services/typeguards";
 import { Cookies } from "react-cookie";
 import { Meta, setLoadState } from "./loadApi";
@@ -85,6 +89,29 @@ export const getUserDataAsync = createAsyncThunk<
     thunkApi.dispatch(setLoadState(false, Meta.UserDataFetch));
     if (isCurrentUserRetrieved(resp)) {
       thunkApi.dispatch(setError({ error: "", statusCode: 200 }));
+      return resp;
+    } else {
+      thunkApi.dispatch(
+        setError({ error: resp.error, statusCode: resp.statusCode })
+      );
+      return thunkApi.rejectWithValue(resp);
+    }
+  });
+});
+
+export const registerUserAsync = createAsyncThunk<
+  RegisterResponse,
+  RegisterRequest,
+  {
+    state: RootState;
+    rejectValue: ApiError;
+  }
+>("users/register", async (registerModel, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true, Meta.UserRegister));
+  return await registerUserAsyncPost(registerModel).then((resp) => {
+    thunkApi.dispatch(setLoadState(false, Meta.UserRegister));
+    if (isRegisterSucceed(resp)) {
+      thunkApi.dispatch(setError({ error: "", statusCode: 201 }));
       return resp;
     } else {
       thunkApi.dispatch(

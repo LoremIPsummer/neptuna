@@ -105,6 +105,7 @@ input[type="email"],
 .input-group-text {
   @include themify($themes) {
     background-color: themed("navbar-background-color") !important;
+    color: themed("text-color") !important;
   }
 }
 
@@ -113,5 +114,23 @@ input[type="email"],
     @include themify($themes) {
       background-color: themed("black") !important;
     }
+  }
+}
+
+p.muted {
+  @include themify($themes) {
+    color: themed("text-color") !important;
+  }
+}
+
+.card-body {
+  @include themify($themes) {
+    color: themed("text-color") !important;
+  }
+}
+
+.card {
+  @include themify($themes) {
+    background-color: themed("page-divider-color") !important;
   }
 }

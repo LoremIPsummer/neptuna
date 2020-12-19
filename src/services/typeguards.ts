@@ -3,6 +3,7 @@ import {
   BaseResponse,
   GetSubjectsResponse,
   LoginResponse,
+  RegisterResponse,
   UserDataResponse,
 } from "./axios-wrappers";
 
@@ -16,6 +17,12 @@ export function isLoginSucceed(
   response: LoginResponse | ApiError
 ): response is LoginResponse {
   return (response as LoginResponse).token !== undefined;
+}
+
+export function isRegisterSucceed(
+  response: RegisterResponse | ApiError
+): response is RegisterResponse {
+  return (response as RegisterResponse).result !== undefined;
 }
 
 export function isCurrentUserRetrieved(
