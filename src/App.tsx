@@ -18,6 +18,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "./app/store";
 import useErrorBoundary from "use-error-boundary";
 import { useLoading, useUser } from "./hooks";
+import withSubjectAndTitle, { SubjectsType } from "./HOC/withSubjectType";
+import { AddType, withAddOption } from "./HOC/withAddOption";
 
 function App() {
   const { isLoading } = useLoading();
@@ -80,22 +82,52 @@ function App() {
                           import("./pages/ProfilePage/ProfilePage")
                         )}
                       />
+                      <Route
+                        path="/felhasznalok"
+                        component={lazy(() =>
+                          import("./pages/UsersPage/UsersPage")
+                        )}
+                      />
+                      <Route
+                        path="/felhasznalo-hozzaadas"
+                        exact
+                        component={withAddOption(AddType.User)}
+                      />
+
                       <SubjectArea>
                         <Switch>
                           <Route
                             path="/targyak"
                             exact
-                            component={lazy(() =>
-                              import("./pages/SubjectPage/SubjectPage")
-                            )}
+                            component={withSubjectAndTitle(SubjectsType.All)}
                           />
                           <Route
                             path="/felvett-targyak"
                             exact
-                            component={lazy(() =>
-                              import("./pages/AppliedSubjectPage/AppliedSubjectPage")
+                            component={withSubjectAndTitle(
+                              SubjectsType.Applied
                             )}
                           />
+                          <Route
+                            path="/targyfelvetel"
+                            exact
+                            component={withSubjectAndTitle(
+                              SubjectsType.NotApplied
+                            )}
+                          />
+                          <Route
+                            path="/oktatott-targyak"
+                            exact
+                            component={withSubjectAndTitle(
+                              SubjectsType.Lectured
+                            )}
+                          />
+                          <Route
+                            path="/targy-hozzaadas"
+                            exact
+                            component={withAddOption(AddType.Subject)}
+                          />
+
                           <Route
                             path="*"
                             component={lazy(() =>
@@ -104,6 +136,7 @@ function App() {
                           />
                         </Switch>
                       </SubjectArea>
+
                       <Route
                         path="*"
                         component={lazy(() =>

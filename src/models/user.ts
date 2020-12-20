@@ -1,5 +1,10 @@
 import { SubjectModel } from "./subject";
 
+export enum Role {
+  Student = "Hallgató",
+  Lecturer = "Oktató",
+  Admin = "Adminisztrátor",
+}
 export interface UserModel {
   id: number;
   neptunaCode: string;
@@ -11,7 +16,7 @@ export interface UserModel {
   bornDate: string;
   bornCountry: string;
   department: string;
-  role: string;
+  role: Role;
   lastlogin: string;
   subjects: SubjectModel[];
 }

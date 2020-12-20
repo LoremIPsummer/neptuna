@@ -24,3 +24,5 @@ export {
   default as SubjectModalBody,
 } from "./SubjectModalBody/SubjectModalBody";
 export { default as Paginator } from "./Paginator/Paginator";
+export { default as AddSubjectForm } from "./AddSubjectForm/AddSubjectForm";
+export { default as AddUserForm } from "./AddUserForm/AddUserForm";

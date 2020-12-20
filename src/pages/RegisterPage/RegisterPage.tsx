@@ -5,11 +5,11 @@ import { Breadcrumb, ErrorDialog, RegisterForm } from "../../components/";
 import { Theme } from "../../context/ThemeContext";
 import { useError, useRedirect, useTitle, useUser } from "../../hooks";
 import { useTheme } from "../../hooks/useTheme";
+import { RegisterRequest } from "../../services/axios-wrappers";
 
 export default function RegisterPage() {
   const { error } = useError();
-  const { user, loggedIn, register } = useUser();
-  const { theme } = useTheme();
+  const { loggedIn, register } = useUser();
   useTitle("Regisztráció");
 
   if (loggedIn) {
@@ -27,13 +27,13 @@ export default function RegisterPage() {
       <Container fluid>
         <Row noGutters>
           <Col xs={12} lg={4}>
-            <RegisterForm />
+            <RegisterForm register={(req: RegisterRequest) => register(req)} />
+            <ErrorDialog error={error} />
           </Col>
           <Col xs={12} lg={6} className="m-auto d-none d-lg-block">
             <Card className="mx-auto">
               <Card.Body>
                 <Image thumbnail rounded src="/images/susu.jpg" />
-                <ErrorDialog error={error} />
               </Card.Body>
             </Card>
           </Col>

@@ -10,11 +10,12 @@ import {
 import { Navbar, Nav } from "react-bootstrap";
 import "./Header.scoped.scss";
 import { useModal, useUser } from "../../hooks";
+import { Role } from "../../models/user";
 
 export default function Header() {
   const [openLogic, setOpen] = useState({ open: false, firstOpen: true });
 
-  const { logout, loggedIn } = useUser();
+  const { logout, loggedIn, user } = useUser();
   const { isShown, Modal, showModal } = useModal();
 
   function handleToggle() {
@@ -42,14 +43,44 @@ export default function Header() {
               <Nav.Item as="li" className="has-sub">
                 <Link to="/targyak">Tárgyak</Link>
                 <Navbar as="ul">
-                  <Nav.Item as="li">
-                    <Link to="/felvett-targyak">Felvett tárgyaim</Link>
-                  </Nav.Item>
-                  <Nav.Item as="li">
-                    <Link to="/targyfelvetel">Tárgyfelvétel</Link>
-                  </Nav.Item>
+                  {user.role === Role.Student && (
+                    <>
+                      <Nav.Item as="li">
+                        <Link to="/felvett-targyak">Felvett tárgyaim</Link>
+                      </Nav.Item>
+                      <Nav.Item as="li">
+                        <Link to="/targyfelvetel">Tárgyfelvétel</Link>
+                      </Nav.Item>
+                    </>
+                  )}
+                  {user.role === Role.Lecturer && (
+                    <>
+                      <Nav.Item as="li">
+                        <Link to="/oktatott-targyak">Oktatott tárgyak</Link>
+                      </Nav.Item>
+                    </>
+                  )}
+                  {user.role === Role.Admin && (
+                    <>
+                      <Nav.Item as="li">
+                        <Link to="/targy-hozzaadas">Tárgy hozzáadása</Link>
+                      </Nav.Item>
+                    </>
+                  )}
                 </Navbar>
               </Nav.Item>
+              {user.role === Role.Admin && (
+                <Nav.Item as="li" className="has-sub">
+                  <Link to="/felhasznalok">Felhasználók</Link>
+                  <Navbar as="ul">
+                    <Nav.Item as="li">
+                      <Link to="/felhasznalo-hozzaadas">
+                        Felhasználó felvétele
+                      </Link>
+                    </Nav.Item>
+                  </Navbar>
+                </Nav.Item>
+              )}
 
               <Nav.Item as="li">
                 <Link to="/statisztika">Statisztika</Link>

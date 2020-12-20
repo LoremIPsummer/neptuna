@@ -33,7 +33,7 @@ export default function LoginForm({ login }: LoginFormProps) {
     e.preventDefault();
     login(loginModel);
     recaptchaRef.current?.reset();
-    dispatch({ type: "changePassword", payload: "" });
+    dispatch({ type: "reset", payload: "" });
     if (checked) {
       localStorage.setItem("savedCode", loginModel.neptunaCode);
     } else {
@@ -153,7 +153,7 @@ export default function LoginForm({ login }: LoginFormProps) {
           <Col xs={12} className="my-3">
             <Button
               disabled={!validated}
-              variant="dark"
+              variant={theme === Theme.Default ? "dark" : "light"}
               type="submit"
               className="d-block mx-auto"
             >

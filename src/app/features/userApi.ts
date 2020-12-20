@@ -1,29 +1,41 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { UserModel } from "../../models/user";
+import { Role, UserModel } from "../../models/user";
 import {
+  allUserAsyncGet,
+  createUserAsyncPost,
+  deleteAccountAsync,
   loginUserAsyncPost,
   registerUserAsyncPost,
   userDataAsyncGet,
 } from "../../services/userService";
 import {
   ApiError,
+  CreateUserRequest,
+  CreateUserResponse,
+  GetUsersRequest,
+  GetUsersResponse,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  RemoveUserRequest,
+  RemoveUserResponse,
   UserDataRequest,
   UserDataResponse,
 } from "../../services/axios-wrappers";
 import {
+  areUsersRetrieved,
   isCurrentUserRetrieved,
   isLoginSucceed,
   isRegisterSucceed,
+  isUserCreated,
 } from "../../services/typeguards";
 import { Cookies } from "react-cookie";
 import { Meta, setLoadState } from "./loadApi";
 import { setError } from "./errorApi";
 import { push } from "connected-react-router";
+import { isUserRemoved } from "../../services/typeguards";
 
 const cookieManager = new Cookies();
 
@@ -42,15 +54,13 @@ const initialState: UserState = {
     memberSince: "",
     bornDate: "",
     lastlogin: "",
-    role: "",
+    role: Role.Student,
     department: "",
     bornCountry: "",
     subjects: [],
   },
   loadedMembers: [],
 };
-
-const resetInitialState = { ...initialState };
 
 export const loginUserAsync = createAsyncThunk<
   LoginResponse,
@@ -63,16 +73,12 @@ export const loginUserAsync = createAsyncThunk<
   thunkApi.dispatch(setLoadState(true, Meta.UserLogin));
   return await loginUserAsyncPost(loginModel).then((resp) => {
     thunkApi.dispatch(setLoadState(false, Meta.UserLogin));
+    setError(resp);
     if (isLoginSucceed(resp)) {
-      thunkApi.dispatch(setError({ error: "", statusCode: 200 }));
       thunkApi.dispatch(push("/profilom"));
       return resp;
-    } else {
-      thunkApi.dispatch(
-        setError({ error: resp.error, statusCode: resp.statusCode })
-      );
-      return thunkApi.rejectWithValue(resp);
     }
+    return thunkApi.rejectWithValue(resp);
   });
 });
 
@@ -87,15 +93,11 @@ export const getUserDataAsync = createAsyncThunk<
   thunkApi.dispatch(setLoadState(true, Meta.UserDataFetch));
   return await userDataAsyncGet().then((resp) => {
     thunkApi.dispatch(setLoadState(false, Meta.UserDataFetch));
+    thunkApi.dispatch(setError(resp));
     if (isCurrentUserRetrieved(resp)) {
-      thunkApi.dispatch(setError({ error: "", statusCode: 200 }));
       return resp;
-    } else {
-      thunkApi.dispatch(
-        setError({ error: resp.error, statusCode: resp.statusCode })
-      );
-      return thunkApi.rejectWithValue(resp);
     }
+    return thunkApi.rejectWithValue(resp);
   });
 });
 
@@ -110,15 +112,68 @@ export const registerUserAsync = createAsyncThunk<
   thunkApi.dispatch(setLoadState(true, Meta.UserRegister));
   return await registerUserAsyncPost(registerModel).then((resp) => {
     thunkApi.dispatch(setLoadState(false, Meta.UserRegister));
+    thunkApi.dispatch(setError(resp));
     if (isRegisterSucceed(resp)) {
-      thunkApi.dispatch(setError({ error: "", statusCode: 201 }));
       return resp;
-    } else {
-      thunkApi.dispatch(
-        setError({ error: resp.error, statusCode: resp.statusCode })
-      );
-      return thunkApi.rejectWithValue(resp);
     }
+    return thunkApi.rejectWithValue(resp);
+  });
+});
+
+export const createUserAsync = createAsyncThunk<
+  CreateUserResponse,
+  CreateUserRequest,
+  {
+    state: RootState;
+    rejectValue: ApiError;
+  }
+>("users/create", async (createModel, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true, Meta.CreateUser));
+  return await createUserAsyncPost(createModel).then((resp) => {
+    thunkApi.dispatch(setLoadState(false, Meta.CreateUser));
+    thunkApi.dispatch(setError(resp));
+    if (isUserCreated(resp)) {
+      return resp;
+    }
+    return thunkApi.rejectWithValue(resp);
+  });
+});
+
+export const removeUserAsync = createAsyncThunk<
+  RemoveUserResponse,
+  RemoveUserRequest,
+  {
+    state: RootState;
+    rejectValue: ApiError;
+  }
+>("users/delete", async (removeModel, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true, Meta.DeleteUser));
+  return await deleteAccountAsync(removeModel).then((resp) => {
+    thunkApi.dispatch(setLoadState(false, Meta.DeleteUser));
+    thunkApi.dispatch(setError(resp));
+    if (isUserRemoved(resp)) {
+      return resp;
+    }
+    return thunkApi.rejectWithValue(resp);
+  });
+});
+
+export const getUsersAsync = createAsyncThunk<
+  GetUsersResponse,
+  GetUsersRequest,
+  {
+    state: RootState;
+    rejectValue: ApiError;
+  }
+>("users/getAll", async (req, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true, Meta.GetAllUser));
+  return await allUserAsyncGet().then((resp) => {
+    thunkApi.dispatch(setLoadState(false, Meta.GetAllUser));
+    thunkApi.dispatch(setError(resp));
+    if (areUsersRetrieved(resp)) {
+      return resp;
+    }
+    return thunkApi.rejectWithValue(resp);
   });
 });
 
@@ -128,9 +183,8 @@ export const userApiSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       cookieManager.remove("token");
-      state.current = resetInitialState.current;
-      console.log(state.current);
-      console.log(resetInitialState.current);
+      state.current = initialState.current;
+      state.loadedMembers = [];
     },
   },
   extraReducers: (builder) => {
@@ -142,6 +196,10 @@ export const userApiSlice = createSlice({
     builder.addCase(getUserDataAsync.fulfilled, (state, action) => {
       state.current = action.payload.user;
     });
+    builder.addCase(getUsersAsync.fulfilled, (state, action) => {
+      state.loadedMembers = action.payload.users;
+    });
+
     builder.addCase(loginUserAsync.rejected, (state, action) => {
       cookieManager.remove("token");
     });
@@ -162,6 +220,10 @@ export const currentUser = (state: RootState) => {
 
 export const loggedIn = (state: RootState) => {
   return state.users.current.neptunaCode !== "";
+};
+
+export const loadedMembers = (state: RootState) => {
+  return state.users.loadedMembers;
 };
 
 export default userApiSlice.reducer;

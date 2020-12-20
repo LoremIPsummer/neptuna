@@ -10,7 +10,6 @@ import withSuspense from "../../HOC/withSuspense";
 export default function LoginPage() {
   const { error } = useError();
   const { loggedIn, login } = useUser();
-  const { redirect } = useRedirect();
   useTitle("Bejelentkezés");
 
   if (loggedIn) return <Redirect to="/" />;

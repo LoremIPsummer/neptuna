@@ -81,9 +81,22 @@ export type TopInfoProps = {
 };
 
 export type RegisterFormProps = {
-  register: () => void;
+  register: (req: RegisterRequest) => void;
 };
 
 export type SubjectModalBodyProps = {
   model: SubjectModel;
+};
+export type SubjectPageProps = {
+  title: string;
+  subjects: SubjectModel[];
+};
+
+export type UserTableProps = {
+  users: UserModel[];
+};
+
+export type AddPageProps = {
+  Form: () => JSX.Element;
+  title: string;
 };

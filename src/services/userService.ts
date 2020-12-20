@@ -1,10 +1,20 @@
+import { UserModel } from "../models/user";
 import {
   ApiError,
+  CreateUserRequest,
+  CreateUserResponse,
+  GetUsersResponse,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  RemoveUserRequest,
+  RemoveUserResponse,
+  ResendMailRequest,
+  ResendMailResponse,
   UserDataResponse,
+  VerifyRequest,
+  VerifyResponse,
 } from "./axios-wrappers";
 import globalAxios, { errorHandler } from "./axiosConfig";
 
@@ -16,7 +26,12 @@ export const registerUserAsyncPost = async (
   req: RegisterRequest
 ): Promise<RegisterResponse | ApiError> => {
   try {
-    return (await globalAxios.post<RegisterResponse>(`/users`, req)).data;
+    const resp = await globalAxios.post<RegisterResponse>(
+      `/users/register`,
+      req
+    );
+    const { result, user } = resp.data;
+    return { result, user, displayable: true, statusCode: resp.status };
   } catch (err) {
     return errorHandler(err);
   }
@@ -32,7 +47,7 @@ export const loginUserAsyncPost = async (
   try {
     const resp = await globalAxios.post<LoginResponse>(`/users/auth`, req);
     const { result, token } = resp.data;
-    return { result, token };
+    return { result, token, displayable: true, statusCode: resp.status };
   } catch (err) {
     return errorHandler(err);
   }
@@ -47,7 +62,8 @@ export const userDataAsyncGet = async (): Promise<
 > => {
   try {
     const resp = await globalAxios.get<UserDataResponse>(`/users/current`);
-    return resp.data;
+    const { user, result } = resp.data;
+    return { user, result, displayable: false, statusCode: resp.status };
   } catch (err) {
     return errorHandler(err);
   }
@@ -58,17 +74,15 @@ export const userDataAsyncGet = async (): Promise<
 // resends the user confirmation mail to the user (if he hasnt confirmed it yet) on the log in page
 
 export const resendConfirmAsyncPost = async (
-  neptunaCode: string
-): Promise<boolean | ApiError> => {
+  req: ResendMailRequest
+): Promise<ResendMailResponse | ApiError> => {
   try {
-    return await globalAxios
-      .post<boolean>(
-        `/users/resendconfirm`,
-        JSON.parse(`{"neptunacode": "${neptunaCode}"}`)
-      )
-      .then((resp) => {
-        return resp.status === 200;
-      });
+    const resp = await globalAxios.post<ResendMailResponse>(
+      `/users/resendconfirm`,
+      JSON.parse(`{"neptunacode": "${req.neptunaCode}"}`)
+    );
+    const { result } = resp.data;
+    return { result, displayable: true, statusCode: resp.status };
   } catch (err) {
     return errorHandler(err);
   }
@@ -79,17 +93,52 @@ export const resendConfirmAsyncPost = async (
 // Verifies the given neptuna code and token against the backend.
 
 export const verifyAccountAsyncGet = async (
-  neptunaCode: string,
-  token: string
-): Promise<boolean | ApiError> => {
+  req: VerifyRequest
+): Promise<VerifyResponse | ApiError> => {
   try {
-    return await globalAxios
-      .get<boolean>(
-        `/users/accountconfirm?neptunacode=${neptunaCode}&token=${token}`
-      )
-      .then((resp) => {
-        return resp.status === 200;
-      });
+    const resp = await globalAxios.get<VerifyResponse>(
+      `/users/accountconfirm?neptunacode=${req.neptunaCode}&token=${req.token}`
+    );
+    const { result } = resp.data;
+    return { result, displayable: true, statusCode: resp.status };
+  } catch (err) {
+    return errorHandler(err);
+  }
+};
+
+export const createUserAsyncPost = async (
+  req: CreateUserRequest
+): Promise<CreateUserResponse | ApiError> => {
+  try {
+    const resp = await globalAxios.post<CreateUserResponse>(`/users/`, req);
+    const { result, createdUser } = resp.data;
+    return { result, displayable: true, statusCode: resp.status, createdUser };
+  } catch (err) {
+    return errorHandler(err);
+  }
+};
+
+export const deleteAccountAsync = async (
+  req: RemoveUserRequest
+): Promise<RemoveUserResponse | ApiError> => {
+  try {
+    const resp = await globalAxios.delete<RemoveUserResponse>(
+      `/users?neptunaCode=${req.neptunaCode}`
+    );
+    const { result, deletedUser } = resp.data;
+    return { result, displayable: true, statusCode: resp.status, deletedUser };
+  } catch (err) {
+    return errorHandler(err);
+  }
+};
+
+export const allUserAsyncGet = async (): Promise<
+  GetUsersResponse | ApiError
+> => {
+  try {
+    const resp = await globalAxios.get<GetUsersResponse>(`/users`);
+    const { result, users } = resp.data;
+    return { result, displayable: false, statusCode: resp.status, users };
   } catch (err) {
     return errorHandler(err);
   }

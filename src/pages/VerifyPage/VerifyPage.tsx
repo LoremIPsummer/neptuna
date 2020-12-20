@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Redirect, useParams } from "react-router-dom";
-import { useLoading, useTitle } from "../../hooks";
-import { ApiError } from "../../services/axios-wrappers";
-import showToast, { ToastOptions } from "../../services/toastrConfig";
-import { isUserVerifiedError } from "../../services/typeguards";
+import { Meta } from "../../app/features/loadApi";
+import { useError, useLoading, useTitle } from "../../hooks";
 import { verifyAccountAsyncGet } from "../../services/userService";
 import "./VerifyPage.scoped.scss";
 
@@ -14,25 +12,23 @@ interface VerifyPageParams {
 
 export default function VerifyPage() {
   useTitle("Megerősítés");
-
+  const { setError } = useError();
   const { neptunacode, token } = useParams<VerifyPageParams>();
-  const [finished, setFinished] = useState(false);
+  const { setLoading } = useLoading();
 
   console.log(neptunacode);
   console.log(token);
 
   useEffect(() => {
     async function isSucceded(neptunaCode: string, token: string) {
-      await verifyAccountAsyncGet(neptunaCode, token).then((resp) => {
-        if (!isUserVerifiedError(resp)) {
-          showToast(ToastOptions.SUCCESS, "Sikeres megerősítés");
-        } else {
-        }
-        setFinished(true);
+      setLoading(true, Meta.VerifyUser);
+      await verifyAccountAsyncGet({ neptunaCode, token }).then((resp) => {
+        setError(resp);
+        setLoading(false, Meta.VerifyUser);
       });
     }
     isSucceded(neptunacode, token);
   }, []);
 
-  return <></>;
+  return <Redirect to="/" />;
 }

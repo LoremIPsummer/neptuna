@@ -1,0 +1,10 @@
+* {
+  @include themify($themes) {
+    color: themed("text-color");
+    border-color: themed("border-color");
+  }
+}
+th,
+td {
+  text-align: center;
+}

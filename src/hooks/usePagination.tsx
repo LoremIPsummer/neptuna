@@ -1,4 +1,4 @@
-import React, { Reducer, useReducer, useState } from "react";
+import React, { useState } from "react";
 import { Paginator } from "../components";
 
 export function usePagination(items: Array<any>, itemsPerPage? : number) {

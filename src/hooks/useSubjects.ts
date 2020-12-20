@@ -5,7 +5,10 @@ import {
   getSubjects,
   applySubject,
   terminateSubject,
+  deleteSubject,
+  createSubject,
 } from "../app/features/subjectApi";
+import { CreateSubjectRequest } from "../services/axios-wrappers";
 
 export const useSubjects = () => {
   const dispatcher = useDispatch();
@@ -13,6 +16,11 @@ export const useSubjects = () => {
 
   return {
     subjects: useSelector(subjects),
+    deleteSub: (subjectCode: string) => {
+      Promise.resolve(dispatcher(deleteSubject({ subjectCode })))
+        .then((_) => dispatcher(getSubjects({})))
+        .then((_) => sync());
+    },
     sync: () => {
       dispatcher(getSubjects({}));
     },
@@ -25,6 +33,9 @@ export const useSubjects = () => {
       Promise.resolve(dispatcher(terminateSubject({ subjectId })))
         .then((_) => dispatcher(getSubjects({})))
         .then((_) => sync());
+    },
+    create: (req: CreateSubjectRequest) => {
+      dispatcher(createSubject(req));
     },
   };
 };

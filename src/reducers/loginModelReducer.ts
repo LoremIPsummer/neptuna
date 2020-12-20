@@ -17,6 +17,9 @@ export function loginModelReducer(
       return { ...loginModel, neptunaCode: action.payload };
     case "changeToken":
       return { ...loginModel, recaptcha: action.payload };
+      case "reset":{
+        return {...initialState};
+      }
     default:
       throw new Error();
   }

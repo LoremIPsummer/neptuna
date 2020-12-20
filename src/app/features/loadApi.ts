@@ -4,11 +4,17 @@ import { AppThunk, RootState } from "../store";
 export enum Meta {
   UserLogin = "User Login",
   UserDataFetch = "User Data Fetch",
+  GetAllUser = "Fetching users",
   SubjectsFetch = "Subjects Fetch",
   ResendEmail = "Resend email sending",
+  VerifyUser = "Verify user account",
   SubjectApply = "Applying for a subject",
   TerminateSubject = "Remove subject from user",
+  DeleteSubject = "Removing a subject",
+  CreateSubject = "Creating a subject",
   UserRegister = "User Register",
+  CreateUser = "Creating a user",
+  DeleteUser = "Removing a user",
 }
 
 interface LoadState {

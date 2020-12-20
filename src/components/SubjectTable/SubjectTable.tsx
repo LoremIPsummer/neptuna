@@ -7,18 +7,27 @@ import {
   faUserPlus,
   faUserTimes,
   faQuestion,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { SubjectModel } from "../../models/subject";
 import { SubjectModalBody } from "../SubjectModalBody/SubjectModalBody";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "./SubjectTable.scoped.scss";
+import { Role } from "../../models/user";
 
 export default function SubjectTable({ models }: SubjectTableProps) {
   const { user } = useUser();
   const { Modal, showModal } = useModal();
-  const { apply, terminate } = useSubjects();
+  const { apply, terminate, deleteSub } = useSubjects();
   const applied = (subject: SubjectModel) =>
     user.subjects.find((s) => subject.subjectCode === s.subjectCode);
+  const lectured = (subject: SubjectModel) =>
+    user.subjects.find(
+      (s) =>
+        subject.teacher &&
+        subject.teacher.firstName + " " + subject.teacher.lastName ===
+          user.firstName + "" + user.lastName
+    );
 
   return (
     <>
@@ -37,14 +46,20 @@ export default function SubjectTable({ models }: SubjectTableProps) {
         <tbody>
           {models.map((model) => (
             <tr
-              className={applied(model.model) ? "striped" : ""}
+              className={
+                applied(model.model) || lectured(model.model) ? "striped" : ""
+              }
               key={model.model.subjectCode}
             >
               <td>{model.model.subjectCode}</td>
               <td>{model.model.subjectName}</td>
               <td>{model.teacherName}</td>
               <td>{model.model.credit}</td>
-              <td className={applied(model.model) ? "applied" : ""}>
+              <td
+                className={
+                  applied(model.model) || lectured(model.model) ? "applied" : ""
+                }
+              >
                 {model.studentsCount}
               </td>
               <td>
@@ -61,7 +76,7 @@ export default function SubjectTable({ models }: SubjectTableProps) {
                 />
               </td>
               <td>
-                {applied(model.model) ? (
+                {applied(model.model) && (
                   <FontAwesomeIcon
                     title="Tárgyleadás"
                     role="button"
@@ -79,7 +94,8 @@ export default function SubjectTable({ models }: SubjectTableProps) {
                       })
                     }
                   />
-                ) : (
+                )}
+                {!applied(model.model) && user.role === Role.Student && (
                   <FontAwesomeIcon
                     title="Tárgyfelvétel"
                     onClick={() =>
@@ -97,7 +113,26 @@ export default function SubjectTable({ models }: SubjectTableProps) {
                     role="button"
                     icon={faUserPlus}
                   />
-                )}{" "}
+                )}
+                {user.role === Role.Admin && (
+                  <FontAwesomeIcon
+                    title="Tárgytörlés"
+                    onClick={() =>
+                      showModal({
+                        title: "Tárgytörlés",
+                        body:
+                          "Biztosan törli a következő tárgyat? " +
+                          model.model.subjectName,
+                        OkText: "Igen",
+                        OkMethod: () => {
+                          deleteSub(model.model.subjectCode);
+                        },
+                      })
+                    }
+                    role="button"
+                    icon={faTrash}
+                  />
+                )}
               </td>
             </tr>
           ))}

@@ -1,6 +1,10 @@
 import {
   ApplySubjectRequest,
   BaseRequest,
+  CreateSubjectRequest,
+  CreateSubjectResponse,
+  RemoveSubjectRequest,
+  RemoveSubjectResponse,
   TerminateSubjectRequest,
 } from "./../../services/axios-wrappers";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -14,12 +18,16 @@ import {
 } from "../../services/axios-wrappers";
 import {
   applySubjectAsyncPost,
+  createSubjectAsyncPost,
+  deleteSubjectAsync,
   listSubjectsAsyncGet,
   terminateSubjectAsyncPost,
 } from "../../services/subjectService";
 import {
   isResponseSucceed,
+  isSubjectCreated,
   isSubjectGetSuccess,
+  isSubjectRemoved,
 } from "../../services/typeguards";
 import { setError } from "./errorApi";
 import { Meta, setLoadState } from "./loadApi";
@@ -41,17 +49,13 @@ export const getSubjects = createAsyncThunk<
   }
 >("subjects", async (req, thunkApi) => {
   thunkApi.dispatch(setLoadState(true, Meta.SubjectsFetch));
-  return await listSubjectsAsyncGet(req).then((data) => {
+  return await listSubjectsAsyncGet(req).then((resp) => {
     thunkApi.dispatch(setLoadState(false, Meta.SubjectsFetch));
-    if (!isSubjectGetSuccess(data)) {
-      thunkApi.dispatch(
-        setError({ error: data.error, statusCode: data.statusCode })
-      );
-      return thunkApi.rejectWithValue(data);
-    } else {
-      thunkApi.dispatch(setError({ error: "", statusCode: 200 }));
-      return data;
+    thunkApi.dispatch(setError(resp));
+    if (isSubjectGetSuccess(resp)) {
+      return resp;
     }
+    return thunkApi.rejectWithValue(resp);
   });
 });
 
@@ -64,17 +68,13 @@ export const applySubject = createAsyncThunk<
   }
 >("subjects/apply", async (req, thunkApi) => {
   thunkApi.dispatch(setLoadState(true, Meta.SubjectApply));
-  return await applySubjectAsyncPost(req).then((data) => {
+  return await applySubjectAsyncPost(req).then((resp) => {
     thunkApi.dispatch(setLoadState(false, Meta.SubjectApply));
-    if (isResponseSucceed(data)) {
-      thunkApi.dispatch(setError({ error: "", statusCode: 200 }));
-      return data;
-    } else {
-      thunkApi.dispatch(
-        setError({ error: data.error, statusCode: data.statusCode })
-      );
-      return thunkApi.rejectWithValue(data);
+    thunkApi.dispatch(setError(resp));
+    if (isResponseSucceed(resp)) {
+      return resp;
     }
+    return thunkApi.rejectWithValue(resp);
   });
 });
 
@@ -87,17 +87,51 @@ export const terminateSubject = createAsyncThunk<
   }
 >("subjects/terminate", async (req, thunkApi) => {
   thunkApi.dispatch(setLoadState(true, Meta.TerminateSubject));
-  return await terminateSubjectAsyncPost(req).then((data) => {
+  return await terminateSubjectAsyncPost(req).then((resp) => {
     thunkApi.dispatch(setLoadState(false, Meta.TerminateSubject));
-    if (isResponseSucceed(data)) {
-      thunkApi.dispatch(setError({ error: "", statusCode: 200 }));
-      return data;
-    } else {
-      thunkApi.dispatch(
-        setError({ error: data.error, statusCode: data.statusCode })
-      );
-      return thunkApi.rejectWithValue(data);
+    thunkApi.dispatch(setError(resp));
+    if (isResponseSucceed(resp)) {
+      return resp;
     }
+    return thunkApi.rejectWithValue(resp);
+  });
+});
+
+export const deleteSubject = createAsyncThunk<
+  RemoveSubjectResponse,
+  RemoveSubjectRequest,
+  {
+    state: RootState;
+    rejectValue: ApiError;
+  }
+>("subjects/delete", async (req, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true, Meta.DeleteSubject));
+  return await deleteSubjectAsync(req).then((resp) => {
+    thunkApi.dispatch(setLoadState(false, Meta.DeleteSubject));
+    thunkApi.dispatch(setError(resp));
+    if (isSubjectRemoved(resp)) {
+      return resp;
+    }
+    return thunkApi.rejectWithValue(resp);
+  });
+});
+
+export const createSubject = createAsyncThunk<
+  CreateSubjectResponse,
+  CreateSubjectRequest,
+  {
+    state: RootState;
+    rejectValue: ApiError;
+  }
+>("subjects/create", async (req, thunkApi) => {
+  thunkApi.dispatch(setLoadState(true, Meta.CreateSubject));
+  return await createSubjectAsyncPost(req).then((resp) => {
+    thunkApi.dispatch(setLoadState(false, Meta.CreateSubject));
+    thunkApi.dispatch(setError(resp));
+    if (isSubjectCreated(resp)) {
+      return resp;
+    }
+    return thunkApi.rejectWithValue(resp);
   });
 });
 

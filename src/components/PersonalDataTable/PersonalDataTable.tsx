@@ -3,6 +3,7 @@ import "./PersonalDataTable.scoped.scss";
 import Jumbotron from "react-bootstrap/esm/Jumbotron";
 import moment from "moment";
 import { PersonalDataTableProps } from "../proptypes";
+import { Role } from "../../models/user";
 
 export default function PersonalDataTable({ user }: PersonalDataTableProps) {
   moment.locale();
@@ -38,7 +39,7 @@ export default function PersonalDataTable({ user }: PersonalDataTableProps) {
           <li>
             <p className="lead">Beosztás: {user.role}</p>
           </li>
-          {user.role === "hallgató" && (
+          {user.role === Role.Student && (
             <li>
               <p>Szak: {user.department}</p>
             </li>

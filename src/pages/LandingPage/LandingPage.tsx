@@ -9,11 +9,11 @@ import {
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
 import "./LandingPage.scoped.scss";
-import { useTitle } from "../../hooks";
+import { useTitle, useUser } from "../../hooks";
 
 export default function LandingPage() {
   useTitle("Főoldal");
-
+  const { login } = useUser();
   return (
     <div className="neptuna-landing-container">
       <div className="neptuna-intro">
@@ -71,7 +71,7 @@ export default function LandingPage() {
       <Row noGutters={true} className="neptuna-features">
         <Col xs={12} lg={3} className="feature-card">
           <h3>
-            <a href="#"> Intézményi jelentkezés </a>
+            <a href="mailto:kissmate@goodiesoft.hu">Intézményi jelentkezés</a>
           </h3>
           <FontAwesomeIcon icon={faUniversity} size={"5x"} />
         </Col>
@@ -82,12 +82,31 @@ export default function LandingPage() {
           <FontAwesomeIcon icon={faEnvelope} size={"5x"} />
         </Col>
         <Col xs={12} lg={3} className="feature-card">
-          <h3>Demo kezelőfelület</h3>
+          <h3
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              login({
+                neptunaCode: "2ff664",
+                password: "NeptunaTeszt123",
+                recaptcha: "",
+              })
+            }
+          >
+            Demo kezelőfelület
+          </h3>
           <FontAwesomeIcon icon={faCogs} size={"5x"} />
         </Col>
 
         <Col xs={12} lg={3} className="feature-card">
-          <h3>Dokumentáció</h3>
+          <h3>
+            <a
+              href="https://github.com/LoremIPsummer/neptuna"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dokumentáció
+            </a>
+          </h3>
           <FontAwesomeIcon icon={faBook} size={"5x"} />
         </Col>
       </Row>

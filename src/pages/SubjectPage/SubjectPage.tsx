@@ -4,11 +4,11 @@ import { Breadcrumb, PageHeading } from "../../components";
 import { convertSubjects } from "../../util/subjects-table";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { usePagination } from "../../hooks/usePagination";
+import { SubjectPageProps } from "../../components/proptypes";
 
-export default function SubjectPage() {
-  useTitle("Tantárgyak");
+export default function SubjectPage({ title, subjects }: SubjectPageProps) {
+  useTitle(title);
 
-  const { subjects } = useSubjects();
   const tableModel = convertSubjects(subjects);
 
   const { items, PaginatorComponent } = usePagination(tableModel);
@@ -25,11 +25,7 @@ export default function SubjectPage() {
           { pathName: "Tantárgyak", pathUrl: "/targyak" },
         ]}
       />
-      <PageHeading
-        title="Tantárgyak"
-        alignment="left"
-        mobileAlignment="center"
-      />
+      <PageHeading title={title} alignment="left" mobileAlignment="center" />
       <React.Suspense
         fallback={
           <Spinner animation="border" role="status">
