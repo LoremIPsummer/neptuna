@@ -19,7 +19,7 @@ export default function ProfilePage() {
           { pathName: "Adataim", pathUrl: "/profilom" },
         ]}
       />
-      <PageHeading title={user.neptunaCode} />
+      <PageHeading title={user.firstName + " " + user.lastName} />
       <Row noGutters className="content">
         <Col sm={12} lg={7}>
           <MessageTable user={user} />
