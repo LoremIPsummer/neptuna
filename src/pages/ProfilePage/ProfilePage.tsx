@@ -5,7 +5,6 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import MessageTable from "../../components/MessageTable/MessageTable";
 import PersonalDataTable from "../../components/PersonalDataTable/PersonalDataTable";
 import { useTitle, useUser } from "../../hooks";
-import "./ProfilePage.scoped.scss";
 
 export default function ProfilePage() {
   const { user } = useUser();
